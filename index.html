@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pura Amertha Bhumi | Gedung Keuangan Negara I Denpasar</title>
+  <meta name="description" content="Portal Informasi Terpadu, Kalender Saka Bali, Warta Kegiatan, dan Layanan Umat Hindu Pura Amertha Bhumi Gedung Keuangan Negara I Denpasar, Bali.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23D97706%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22 fill=%22%23FFFBEB%22/><line x1=%222%22 y1=%2212%22 x2=%2222%22 y2=%2212%22/><path d=%22M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z%22/></svg>">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <!-- Balinese Padma / Candi Emblem (Flat SVG contour) -->
+        <div class="brand-emblem">
+          <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+            <path d="M2 12h20"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="title">Pura Amertha Bhumi</span>
+          <span class="subtitle">Integrated Portal</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#beranda" class="active">Beranda</a></li>
+        <li><a href="#sorotan-warta">Berita Utama</a></li>
+        <li><a href="#kalender">Kalender Bali</a></li>
+        <li><a href="#warta">Warta Kegiatan</a></li>
+        <li><a href="#punia">Dana Punia</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline btn-sm">
+          Portal Masuk
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">
+          <svg class="icon" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="hero-section" id="beranda">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <svg class="icon-sm" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Om Swastyastu • Pura Khayangan Swagina</span>
+          </div>
+          <h1 class="hero-title">Pura Amertha Bhumi<br>GKN I Denpasar</h1>
+          <p class="hero-subtitle">
+            Pusat peribadatan Hyang Widhi Wasa, pembinaan rohani spiritual, pelestarian adat seni budaya, dan keharmonisan umat Hindu di lingkungan Gedung Keuangan Negara I Denpasar.
+          </p>
+          <div class="hero-cta-group">
+            <a href="#kalender" class="btn btn-primary">
+              <svg class="icon-sm" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span>Kalender Hari Ini</span>
+            </a>
+            <a href="#" class="btn btn-outline btn-open-register">
+              <svg class="icon-sm" viewBox="0 0 24 24">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <line x1="19" y1="8" x2="19" y2="14"></line>
+                <line x1="22" y1="11" x2="16" y2="11"></line>
+              </svg>
+              <span>Daftar Umat Baru</span>
+            </a>
+          </div>
+          <div class="hero-features-ribbon">
+            <div class="ribbon-item">
+              <span class="num">350+</span>
+              <span class="label">Umat Terdaftar</span>
+            </div>
+            <div class="ribbon-item">
+              <span class="num">5 Unit</span>
+              <span class="label">Satker GKN I</span>
+            </div>
+            <div class="ribbon-item">
+              <span class="num">100%</span>
+              <span class="label">Transparan & Terbuka</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Balinese Saka Calendar Card -->
+        <div class="hero-calendar" id="kalender">
+          <div class="calendar-card">
+            <div class="calendar-header">
+              <div class="cal-title-wrap">
+                <h3>Kalender Saka Bali</h3>
+                <p id="calSakaYear">Tahun Saka ...</p>
+              </div>
+              <div class="cal-today-badge">
+                <div class="day-name" id="calDayName">...</div>
+                <div class="greg-date" id="calGregDate">...</div>
+              </div>
+            </div>
+
+            <div class="wariga-pills">
+              <div class="wariga-pill">
+                <div class="tag">Pawukon</div>
+                <div class="val" id="calWukuVal">Wuku ...</div>
+              </div>
+              <div class="wariga-pill">
+                <div class="tag">Sasih (Bulan)</div>
+                <div class="val" id="calSasihVal">Sasih ...</div>
+              </div>
+            </div>
+
+            <div class="rerahinan-upcoming">
+              <h4>
+                <svg class="icon-sm" viewBox="0 0 24 24" style="color: var(--primary);">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <span>Rerahinan Terdekat (30 Hari)</span>
+              </h4>
+              <ul class="rerahinan-list" id="calUpcomingList">
+                <li class="rerahinan-item"><span>Memuat data wariga...</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- QUICK ACCESS SERVICES -->
+  <section class="section" style="background-color: var(--bg-subtle);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Layanan Terpadu</span>
+        <h2 class="section-title">Akses Cepat Umat</h2>
+        <p class="section-desc">Fasilitas digital penunjang kegiatan persembahyangan dan administrasi keumatan di lingkungan kantor GKN I.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div>
+            <div class="service-icon">
+              <svg class="icon" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <h3>Kalender & Rerahinan</h3>
+            <p>Penanggalan Saka Bali lengkap dengan Wuku, Sasih, fase Purnama/Tilem, dan hari suci keagamaan terdekat.</p>
+          </div>
+          <a href="#kalender" class="service-link">Lihat Jadwal →</a>
+        </div>
+
+        <div class="service-card">
+          <div>
+            <div class="service-icon">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+              </svg>
+            </div>
+            <h3>Warta & Publikasi</h3>
+            <p>Liputan upacara piodalan, gotong royong ngayah, dan rilis warta resmi seksi humas pura.</p>
+          </div>
+          <a href="#warta" class="service-link">Baca Warta →</a>
+        </div>
+
+        <div class="service-card">
+          <div>
+            <div class="service-icon">
+              <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                <line x1="12" y1="6" x2="12" y2="8"></line>
+                <line x1="12" y1="16" x2="12" y2="18"></line>
+              </svg>
+            </div>
+            <h3>Dana Punia & Kas</h3>
+            <p>Laporan pertanggungjawaban kas pura secara berkala dan informasi saluran ngaturang punia resmi.</p>
+          </div>
+          <a href="#punia" class="service-link">Lihat Laporan →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOROTAN ARTIKEL UTAMA (PINNED HERO STORY) -->
+  <section class="section hero-article-section" id="sorotan-warta">
+    <div class="container">
+      <div class="section-header" style="text-align: left; margin-bottom: 1.5rem;">
+        <span class="section-tag" style="background: rgba(212, 160, 36, 0.15); color: #B45309; border: 1px solid rgba(212, 160, 36, 0.3);">📌 Sorotan Khusus</span>
+        <h2 class="section-title" style="font-size: 1.6rem; margin-top: 0.25rem;">Berita & Maklumat Utama</h2>
+        <p class="section-desc" style="margin: 0;">Warta terdepan dan maklumat penting yang disematkan langsung oleh Humas & Pengurus Pura.</p>
+      </div>
+
+      <div id="heroArticleContainer">
+        <!-- Rendered dynamically from CMS via js/app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- WARTA & ARTIKEL KEGIATAN (CMS FEED) -->
+  <section class="section" id="warta" style="background-color: var(--bg-subtle);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Publikasi & Humas</span>
+        <h2 class="section-title">Warta & Dharma Wacana</h2>
+        <p class="section-desc">Informasi liputan upacara piodalan, gotong royong, dan artikel pencerahan rohani.</p>
+      </div>
+
+      <div class="articles-grid" id="publicArticlesList">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPARANSI DANA PUNIA -->
+  <section class="section" id="punia">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Akuntabilitas Umat</span>
+        <h2 class="section-title">Transparansi Kas & Dana Punia</h2>
+        <p class="section-desc">Pengelolaan dana punia dikelola secara terbuka dan dilaporkan secara berkala oleh seksi kepengurusan bendahara.</p>
+      </div>
+
+      <div class="punia-container">
+        <div class="punia-summary-card">
+          <div>
+            <div class="punia-saldo-box">
+              <div class="label">Saldo Kas Pura Terkini</div>
+              <div class="amount" id="publicPuniaSaldo">Rp 47.300.000</div>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+              Dana punia dipergunakan untuk kelancaran penyelenggaraan upacara piodalan, pembelian sarana upakara (banten/canang harian), serta pemeliharaan sarana prasarana fisik Pura Amertha Bhumi GKN I Denpasar.
+            </p>
+          </div>
+
+          <div class="punia-stats-row">
+            <div class="punia-stat-item in">
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Pemasukan Bulan Ini</div>
+              <div class="val">+ Rp 20.500.000</div>
+            </div>
+            <div class="punia-stat-item out">
+              <div style="font-size: 0.72rem; color: var(--text-muted);">Pengeluaran Bulan Ini</div>
+              <div class="val">- Rp 3.200.000</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="qris-box">
+          <div class="qris-placeholder">
+            <svg class="icon-lg" viewBox="0 0 24 24" style="color: var(--primary);">
+              <rect width="5" height="5" x="3" y="3" rx="1"></rect>
+              <rect width="5" height="5" x="16" y="3" rx="1"></rect>
+              <rect width="5" height="5" x="3" y="16" rx="1"></rect>
+              <path d="M21 16h-3a2 2 0 0 0-2 2v3"></path>
+              <path d="M21 21v.01"></path>
+              <path d="M12 7v3a2 2 0 0 1-2 2H7"></path>
+              <path d="M3 12h.01"></path>
+              <path d="M12 3h.01"></path>
+              <path d="M12 16v.01"></path>
+              <path d="M16 12h1"></path>
+              <path d="M21 12v.01"></path>
+              <path d="M12 21v-1"></path>
+            </svg>
+          </div>
+          <h4 style="font-size: 1.05rem; color: var(--text-primary); margin-bottom: 0.35rem;">Ngaturang Dana Punia</h4>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Bank BPD Bali / Mandiri / BRI Virtual Account<br>
+            <strong>A.n. Pura Amertha Bhumi GKN I</strong>
+          </p>
+          <span style="font-size: 0.75rem; color: var(--primary-dark); background: var(--bg-accent-light); padding: 0.25rem 0.65rem; border-radius: var(--radius-full); font-weight: 600;">
+            Konfirmasi Punia via Dashboard Anggota
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOKUMENTASI KEGIATAN (GALERI CMS) -->
+  <section class="section" id="galeri" style="background-color: var(--bg-subtle);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Dokumentasi</span>
+        <h2 class="section-title">Galeri Upacara & Kegiatan</h2>
+        <p class="section-desc">Momen kebersamaan, persembahyangan bersama, dan kegiatan sosial umat Hindu GKN I Denpasar.</p>
+      </div>
+
+      <div class="gallery-grid" id="publicGalleryList">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL PENDAFTARAN UMAT BARU -->
+  <div class="modal-backdrop" id="registerModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Formulir Pendaftaran Umat Baru</h3>
+        <button class="modal-close" id="closeRegisterModal" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="registerAlert" style="display: none;"></div>
+        <form id="formRegisterUmat">
+          <div class="form-group">
+            <label for="regNama">Nama Lengkap & Gelar *</label>
+            <input type="text" id="regNama" name="nama" class="form-control" placeholder="Contoh: I Putu Harjaya, S.E." required>
+          </div>
+          <div class="form-group">
+            <label for="regNip">NIP / NIK (Nomor Induk Pegawai) *</label>
+            <input type="text" id="regNip" name="nip" class="form-control" placeholder="18 digit NIP Kemenkeu atau NIK" required>
+          </div>
+          <div class="form-group">
+            <label for="regSatker">Unit Satuan Kerja di GKN I Denpasar *</label>
+            <select id="regSatker" name="satker" class="form-control form-select" required>
+              <option value="">-- Pilih Satker --</option>
+              <option value="KPP Pratama Denpasar Timur (DJP)">KPP Pratama Denpasar Timur (DJP)</option>
+              <option value="KPP Pratama Denpasar Barat (DJP)">KPP Pratama Denpasar Barat (DJP)</option>
+              <option value="Kanwil DJP Bali">Kanwil DJP Bali</option>
+              <option value="KPPBC Denpasar (DJBC)">KPPBC Denpasar (DJBC)</option>
+              <option value="Kanwil DJBC Bali, NTB, NTT">Kanwil DJBC Bali, NTB, NTT</option>
+              <option value="KPKNL Denpasar (DJKN)">KPKNL Denpasar (DJKN)</option>
+              <option value="Kanwil DJKN Bali dan Nusa Tenggara">Kanwil DJKN Bali dan Nusa Tenggara</option>
+              <option value="Kanwil DJPb Provinsi Bali">Kanwil DJPb Provinsi Bali</option>
+              <option value="Balai Diklat Keuangan (BDK) Denpasar">Balai Diklat Keuangan (BDK) Denpasar</option>
+              <option value="Tenaga Pendukung / PPNPN">Tenaga Pendukung / PPNPN / Rekanan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="regJabatan">Jabatan / Bagian *</label>
+            <input type="text" id="regJabatan" name="jabatan" class="form-control" placeholder="Contoh: Penata Keuangan / Pelaksana" required>
+          </div>
+          <div class="form-group">
+            <label for="regWa">Nomor WhatsApp Aktif *</label>
+            <input type="tel" id="regWa" name="whatsapp" class="form-control" placeholder="Contoh: 081234567890" required>
+          </div>
+          <div class="form-group">
+            <label for="regAlamat">Alamat Domisili di Denpasar / Sekitar</label>
+            <input type="text" id="regAlamat" name="alamat" class="form-control" placeholder="Kelurahan, Kota / Kabupaten">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+            Daftar Sekarang
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-brand">
+            <div class="brand-emblem">
+              <svg class="icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                <path d="M2 12h20"></path>
+              </svg>
+            </div>
+            <div class="brand-info">
+              <span class="title">Pura Amertha Bhumi</span>
+              <span class="subtitle">Integrated Portal</span>
+            </div>
+          </div>
+          <p>
+            Pura Amertha Bhumi berlokasi di dalam kompleks Gedung Keuangan Negara I Denpasar, Jl. DR. Kusuma Atmaja, Sumerta Kelod, Kec. Denpasar Timur, Kota Denpasar, Bali.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="#beranda">Beranda</a></li>
+            <li><a href="#sorotan-warta">Berita Utama</a></li>
+            <li><a href="#kalender">Kalender Bali</a></li>
+            <li><a href="#warta">Warta Kegiatan</a></li>
+            <li><a href="#punia">Dana Punia</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Layanan</h4>
+          <ul>
+            <li><a href="#" class="btn-open-register">Pendaftaran Umat</a></li>
+            <li><a href="login.html">Portal Masuk (Umat & Pengurus)</a></li>
+            <li><a href="#warta">Warta & Liputan Humas</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kontak Pengurus</h4>
+          <ul>
+            <li><span style="color: var(--text-muted);">Sekretariat Pura GKN I</span></li>
+            <li><a href="mailto:umathindugkn1@gmail.com">umathindugkn1@gmail.com</a></li>
+            <li><span style="color: var(--text-muted);">Denpasar Timur, Bali 80234</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Pengurus Pura Amertha Bhumi GKN I Denpasar. Dilindungi Hak Cipta.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL BACA ARTIKEL LENGKAP -->
+  <div class="modal-backdrop" id="articleModalBackdrop" style="display: none;">
+    <div class="modal-dialog" style="max-width: 680px; width: 92%;" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div>
+          <span class="modal-badge-tag" id="modalArtCategory" style="font-size: 0.72rem; color: #D97706; font-weight: 700; text-transform: uppercase;">Kategori</span>
+          <h3 class="modal-title" id="modalArtTitle" style="margin-top: 0.35rem; font-size: 1.25rem;">Judul Artikel</h3>
+          <p class="modal-subtitle" id="modalArtMeta" style="font-size: 0.8rem; color: var(--text-muted); margin: 0.2rem 0 0;">Tanggal Publikasi</p>
+        </div>
+        <button class="modal-close-btn" id="modalArtClose" aria-label="Tutup Dialog">✕</button>
+      </div>
+      <div class="modal-body" style="max-height: 65vh; overflow-y: auto; padding: 1.5rem;">
+        <img id="modalArtImage" src="" alt="Cover" style="width: 100%; max-height: 320px; object-fit: cover; border-radius: 8px; margin-bottom: 1.25rem; display: none;">
+        <div id="modalArtContent" style="font-size: 0.95rem; line-height: 1.8; color: var(--text-primary); white-space: pre-line;"></div>
+      </div>
+      <div class="modal-footer" style="padding: 1rem 1.5rem; display: flex; justify-content: flex-end; border-top: 1px solid var(--border-color);">
+        <button type="button" class="btn btn-outline btn-sm" id="modalArtCloseBtn">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/calendar.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

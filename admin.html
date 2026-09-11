@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Portal Terpadu | Pura Amertha Bhumi GKN I Denpasar</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23D97706%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22 fill=%22%23FFFBEB%22/><line x1=%222%22 y1=%2212%22 x2=%2222%22 y2=%2212%22/><path d=%22M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z%22/></svg>">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- MOBILE SIDEBAR BACKDROP -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar" id="dashboardSidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-emblem">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="sidebar-title">Pura Amertha Bhumi</div>
+        <div class="sidebar-sub">Integrated Portal</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-category">Navigasi Utama</div>
+      <button class="nav-tab-btn member-only-nav" data-tab="tab-beranda-umat" id="navBerandaUmat" style="display: none;">
+        <svg class="icon-sm" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Beranda Umat</span>
+      </button>
+      <button class="nav-tab-btn active admin-only-nav" data-tab="tab-overview">
+        <svg class="icon-sm" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Ringkasan Dashboard</span>
+      </button>
+
+      <div class="nav-category admin-only-nav">Keumatan & CRM</div>
+      <button class="nav-tab-btn admin-only-nav" data-tab="tab-crm">
+        <svg class="icon-sm" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <span>CRM Data Umat</span>
+      </button>
+      <button class="nav-tab-btn admin-only-nav" data-tab="tab-agenda">
+        <svg class="icon-sm" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span>Kegiatan Pura</span>
+      </button>
+
+      <div class="nav-category admin-only-nav">Publikasi & CMS</div>
+      <button class="nav-tab-btn admin-only-nav" data-tab="tab-artikel">
+        <svg class="icon-sm" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg>
+        <span>CMS Warta & Artikel</span>
+      </button>
+      <button class="nav-tab-btn admin-only-nav" data-tab="tab-galeri">
+        <svg class="icon-sm" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+        <span>CMS Galeri Foto</span>
+      </button>
+
+      <div class="nav-category admin-only-nav">Keuangan Pura</div>
+      <button class="nav-tab-btn admin-only-nav" data-tab="tab-kas">
+        <svg class="icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><line x1="12" y1="6" x2="12" y2="8"></line><line x1="12" y1="16" x2="12" y2="18"></line></svg>
+        <span>Kas & Dana Punia</span>
+      </button>
+      <button class="nav-tab-btn admin-only-nav" data-tab="tab-audit-kas">
+        <svg class="icon-sm" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Log & Audit Kas</span>
+      </button>
+
+      <div class="nav-category">Komunikasi & Akun</div>
+      <button class="nav-tab-btn" data-tab="tab-pengumuman" id="navPengumuman">
+        <svg class="icon-sm" viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <span>Pengumuman Umat</span>
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-profil" id="navProfil">
+        <svg class="icon-sm" viewBox="0 0 24 24">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Edit Profil Saya</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="index.html" class="back-portal-btn">
+        <svg class="icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span>Lihat Portal Publik</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="sidebar-mobile-toggle" id="sidebarMobileToggle" aria-label="Toggle Sidebar">
+          <svg class="icon" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="topbar-breadcrumb">
+          <span style="font-size: 0.88rem; font-weight: 600; color: var(--text-main);">Pura Amertha Bhumi</span>
+          <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.5rem; display: inline-block;">• GKN I Denpasar</span>
+        </div>
+      </div>
+
+      <div class="topbar-user">
+        <div class="user-profile-badge">
+          <div class="user-avatar" id="topbarUserAvatar">PB</div>
+          <div class="user-details">
+            <span class="user-name" id="topbarUserName">Nama Pengguna</span>
+            <span class="user-role-tag" id="topbarUserRole">Peran</span>
+          </div>
+        </div>
+
+        <button class="btn-logout" id="btnLogout">
+          Keluar
+        </button>
+      </div>
+    </header>
+
+    <!-- CONTENT AREA -->
+    <main class="content-area">
+
+      <!-- ===================================================================
+           TAB 0: BERANDA KHUSUS ANGGOTA UMAT (TRANSPARANSI KAS & AGENDA)
+           =================================================================== -->
+      <section class="tab-pane" id="tab-beranda-umat">
+        <div class="view-header">
+          <div>
+            <h2 id="berandaUmatGreeting">Om Swastyastu, Umat Sedharma</h2>
+            <p>Selamat datang di Portal Umat Pura Amertha Bhumi GKN I Denpasar. Akses transparansi kas pura dan agenda persembahyangan bersama.</p>
+          </div>
+        </div>
+
+        <!-- 3 KPI Grid Transparansi Kas Pura -->
+        <div class="kpi-grid" style="margin-bottom: 2rem;">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Saldo Kas Pura Saat Ini</span>
+              <span class="kpi-badge green">Kas Terkini</span>
+            </div>
+            <div class="kpi-value" id="umatKasSaldo" style="color: #059669;">Rp 0</div>
+            <div class="kpi-footer">
+              <span>Dana terkelola transparan</span>
+              <span style="font-weight: 600; color: #059669;">Terverifikasi</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Total Pemasukan Punia</span>
+              <span class="kpi-badge green">+ Masuk</span>
+            </div>
+            <div class="kpi-value" id="umatKasPemasukan" style="color: #0284C7;">Rp 0</div>
+            <div class="kpi-footer">
+              <span>Punia rutin & donasi umat</span>
+              <span style="color: #0284C7; font-weight: 500;">Bulan Ini</span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Total Pengeluaran Kas</span>
+              <span class="kpi-badge" style="background: #FEF2F2; color: #DC2626; border-color: #FECACA;">- Alokasi</span>
+            </div>
+            <div class="kpi-value" id="umatKasPengeluaran" style="color: #DC2626;">Rp 0</div>
+            <div class="kpi-footer">
+              <span>Upakara, banten & sarana</span>
+              <span style="color: #DC2626; font-weight: 500;">Bulan Ini</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Layout 2 Kolom: Transparansi Pengeluaran & Agenda Terdekat -->
+        <div class="content-grid-2col" style="gap: 1.5rem;">
+          <!-- Kolom 1: Transparansi Pengeluaran Terkini -->
+          <div class="editor-card" style="margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem;">
+              <div>
+                <h3 style="margin: 0; font-size: 1.05rem;">Alokasi Pengeluaran Kas Terkini</h3>
+                <p style="margin: 0.2rem 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Laporan transparansi penggunaan dana punia untuk keperluan pura</p>
+              </div>
+              <span class="status-badge active" style="font-size: 0.72rem;">Transparan</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table" style="font-size: 0.82rem;">
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Pos Kategori</th>
+                    <th>Keterangan Keperluan</th>
+                    <th style="text-align: right;">Nominal</th>
+                  </tr>
+                </thead>
+                <tbody id="umatPengeluaranTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Kolom 2: Agenda Acara Terdekat (Tanpa Satker Ngayah) -->
+          <div class="editor-card" style="margin-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem;">
+              <div>
+                <h3 style="margin: 0; font-size: 1.05rem;">Agenda & Jadwal Kegiatan Terdekat</h3>
+                <p style="margin: 0.2rem 0 0 0; font-size: 0.8rem; color: var(--text-muted);">Jadwal persembahyangan bersama seluruh umat di pura</p>
+              </div>
+              <button type="button" id="btnShortcutPengumuman" class="btn-action-sm" style="color: var(--primary);">Lihat Pengumuman</button>
+            </div>
+
+            <div id="umatAgendaList" style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 1: RINGKASAN OVERVIEW
+           =================================================================== -->
+      <section class="tab-pane active" id="tab-overview">
+        <div class="view-header">
+          <div>
+            <h2>Ringkasan Operasional Pura</h2>
+            <p>Statistik real-time umat terdaftar, saldo kas punia, publikasi warta, dan agenda kegiatan pura.</p>
+          </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Total Umat Terdaftar</span>
+              <span class="kpi-badge green">Aktif</span>
+            </div>
+            <div class="kpi-value" id="kpiTotalUmat">352</div>
+            <div class="kpi-footer">Pegawai & Non-Pegawai GKN I</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Saldo Kas Punia</span>
+              <span class="kpi-badge gold">Terkini</span>
+            </div>
+            <div class="kpi-value" id="kpiSaldoPunia">Rp 47.300.000</div>
+            <div class="kpi-footer">Kas Resmi Pura Amertha Bhumi</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Agenda Mendatang</span>
+              <span class="kpi-badge gold">Segera</span>
+            </div>
+            <div class="kpi-value" style="font-size: 1.35rem;">Piodalan Sasih Kadasa</div>
+            <div class="kpi-footer">Jadwal Persembahyangan Bersama</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-header">
+              <span class="kpi-title">Artikel Terbit (CMS)</span>
+              <span class="kpi-badge green">Online</span>
+            </div>
+            <div class="kpi-value" id="kpiTotalArtikel">4</div>
+            <div class="kpi-footer">Warta & Dharma Wacana Publik</div>
+          </div>
+        </div>
+
+        <!-- Quick Info Grid -->
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 1.5rem;" class="cms-grid">
+          <div class="editor-card">
+            <h3>Informasi Terkini Pengurus Pura</h3>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 1.25rem;">
+              Selamat datang di Dashboard Terpadu Pura Amertha Bhumi GKN I Denpasar. Sistem ini menghubungkan database pendaftaran umat dari seluruh kantor vertikal Kementerian Keuangan di Gedung Keuangan Negara I Denpasar, transparansi kas punia, dan sistem publikasi konten otomatis ke Google Drive.
+            </p>
+            <div style="background: var(--bg-accent-soft); border-left: 3px solid var(--primary); padding: 0.85rem 1rem; border-radius: 4px; font-size: 0.82rem; color: var(--primary-dark);">
+              <strong>Tips Efisiensi Foto:</strong> Fitur unggah foto dokumentasi di menu <em>CMS Galeri Foto</em> otomatis memperkecil ukuran foto kamera ponsel Anda sehingga kapasitas Google Drive Pura tetap hemat dan tidak boros kuota!
+            </div>
+          </div>
+
+          <div class="editor-card">
+            <h3>Distribusi Satker Umat GKN I</h3>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.85rem;">
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.35rem;">
+                <span style="color: var(--text-secondary);">DJP (KPP Denpasar Timur & Barat, Kanwil)</span>
+                <strong style="color: var(--primary-dark);">142 Umat</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.35rem;">
+                <span style="color: var(--text-secondary);">DJBC (KPPBC Denpasar & Kanwil Bali)</span>
+                <strong style="color: var(--primary-dark);">88 Umat</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.35rem;">
+                <span style="color: var(--text-secondary);">DJKN (KPKNL Denpasar & Kanwil)</span>
+                <strong style="color: var(--primary-dark);">54 Umat</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 0.35rem;">
+                <span style="color: var(--text-secondary);">DJPb & BDK Denpasar</span>
+                <strong style="color: var(--primary-dark);">45 Umat</strong>
+              </li>
+              <li style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-secondary);">PPNPN & Tenaga Pendukung</span>
+                <strong style="color: var(--primary-dark);">23 Umat</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 2: CRM DATA UMAT
+           =================================================================== -->
+      <section class="tab-pane" id="tab-crm">
+        <div class="view-header">
+          <div>
+            <h2>Database Keumatan (CRM Umat)</h2>
+            <p>Kelola seluruh data pegawai dan non-pegawai umat Hindu yang terdaftar di lingkungan GKN I Denpasar.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button class="btn btn-primary btn-sm" id="btnTambahAnggota" style="display: none;">
+              <svg class="icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Tambah Anggota
+            </button>
+            <button class="btn btn-outline btn-sm" id="btnExportCrm">
+              Ekspor Data
+            </button>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-toolbar">
+            <div class="table-filters" style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <label style="font-size: 0.8rem; color: var(--text-muted);">Satker:</label>
+                <select class="filter-select" id="crmSatkerFilter">
+                  <option value="ALL">Semua Satuan Kerja</option>
+                  <option value="DJP">DJP (Pajak)</option>
+                  <option value="DJBC">DJBC (Bea Cukai)</option>
+                  <option value="DJKN">DJKN (Kekayaan Negara)</option>
+                  <option value="DJPb">DJPb (Perbendaharaan)</option>
+                  <option value="BDK">BDK Denpasar</option>
+                </select>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <label style="font-size: 0.8rem; color: var(--text-muted);">Status:</label>
+                <select class="filter-select" id="crmStatusFilter">
+                  <option value="ALL">Semua Status</option>
+                  <option value="Aktif">Aktif</option>
+                  <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                  <option value="Nonaktif">Nonaktif (Pensiun/Mutasi)</option>
+                </select>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <label style="font-size: 0.8rem; color: var(--text-muted);">Peran:</label>
+                <select class="filter-select" id="crmRoleFilter">
+                  <option value="ALL">Semua Peran</option>
+                  <option value="admin">Super Admin</option>
+                  <option value="secretary">Sekretaris</option>
+                  <option value="finance">Bendahara</option>
+                  <option value="humas">Humas & Publikasi</option>
+                  <option value="member">Anggota Umat</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <input type="text" placeholder="Filter nama / NIP..." class="form-control-dash" id="crmSearchInput" style="width: 200px; padding: 0.4rem 0.75rem; font-size: 0.82rem;">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nama</th>
+                  <th>Asal Satker</th>
+                  <th>Peran Akun</th>
+                  <th>Kontak WA</th>
+                  <th>Status</th>
+                  <th style="text-align: center; width: 190px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="crmTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 3: CMS WARTA & ARTIKEL
+           =================================================================== -->
+      <section class="tab-pane" id="tab-artikel">
+        <div class="view-header">
+          <div>
+            <h2>CMS Warta & Artikel</h2>
+            <p>Tulis artikel rohani, liputan upacara, dan pengumuman untuk ditampilkan di halaman depan.</p>
+          </div>
+        </div>
+
+        <div class="cms-grid">
+          <!-- Editor Form -->
+          <div class="editor-card" id="articleEditorCard">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+              <h3 id="formArticleHeading" style="margin: 0;">Tulis Artikel Baru</h3>
+              <span id="badgeEditMode" style="display: none; background: rgba(59, 130, 246, 0.15); color: #2563EB; border: 1px solid rgba(59, 130, 246, 0.3); padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.72rem; font-weight: 700;">Mode Edit</span>
+            </div>
+
+            <div id="articleEditBanner" style="display: none; background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 1rem; align-items: center; justify-content: space-between;">
+              <div style="font-size: 0.82rem; color: #1E40AF;">
+                Sedang mengedit: <strong id="articleEditTitleText"></strong>
+              </div>
+              <button type="button" id="btnCancelEditArticle" class="btn-action-sm" style="background: #FFFFFF; color: #475569; border-color: #CBD5E1; cursor: pointer;">Batal Edit</button>
+            </div>
+
+            <form id="formCmsArticle">
+              <input type="hidden" id="editArticleIndex" value="-1">
+
+              <div class="form-group-dash">
+                <label for="artTitle">Judul Artikel *</label>
+                <input type="text" id="artTitle" name="artTitle" class="form-control-dash" placeholder="Contoh: Makna Filosofis Piodalan Rahina Purnama" required>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group-dash">
+                  <label for="artCategory">Kategori *</label>
+                  <select id="artCategory" name="artCategory" class="form-control-dash">
+                    <option value="Warta Kegiatan">Warta Kegiatan</option>
+                    <option value="Dharma Wacana">Dharma Wacana</option>
+                    <option value="Liputan Upacara">Liputan Upacara</option>
+                    <option value="Informasi Hari Raya">Informasi Hari Raya</option>
+                  </select>
+                </div>
+                <div class="form-group-dash">
+                  <label for="artStatus">Status Publikasi</label>
+                  <select id="artStatus" name="artStatus" class="form-control-dash">
+                    <option value="Published">Published (Tayang)</option>
+                    <option value="Draft">Draft (Simpan Sementara)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group-dash">
+                <label for="artImage">URL Foto Sampul (Thumbnail)</label>
+                <input type="url" id="artImage" name="artImage" class="form-control-dash" placeholder="https://... atau biarkan kosong untuk gambar default">
+              </div>
+
+              <!-- Pin as Hero Article Spotlight -->
+              <div class="form-group-dash" style="background: rgba(212, 160, 36, 0.08); border: 1px solid rgba(212, 160, 36, 0.25); border-radius: 8px; padding: 0.75rem 1rem;">
+                <label for="artIsHero" style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; margin: 0; font-weight: 600; color: #B45309;">
+                  <input type="checkbox" id="artIsHero" name="artIsHero" style="width: 18px; height: 18px; accent-color: #D97706; cursor: pointer;">
+                  <span>📌 Sematkan sebagai <strong>Berita Utama (Hero Front End)</strong></span>
+                </label>
+                <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0.35rem 0 0 1.8rem;">
+                  Artikel ini akan disorot besar di bagian depan portal utama secara terpisah dari katalog warta reguler.
+                </p>
+              </div>
+
+              <div class="form-group-dash">
+                <label for="artContent">Isi Teks Artikel *</label>
+                <textarea id="artContent" name="artContent" class="form-control-dash" placeholder="Tuliskan materi berita, warta kegiatan, atau dharma wacana di sini..." required></textarea>
+              </div>
+
+              <button type="submit" id="btnSubmitArticleForm" class="btn btn-primary" style="width: 100%;">
+                Simpan & Publikasikan Artikel
+              </button>
+            </form>
+          </div>
+
+          <!-- Existing Articles List -->
+          <div class="editor-card">
+            <h3>Daftar Artikel Aktif</h3>
+            <div class="table-responsive">
+              <table class="data-table" style="font-size: 0.82rem;">
+                <thead>
+                  <tr>
+                    <th>Judul</th>
+                    <th>Kategori</th>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th>Sorotan Depan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="cmsArticlesTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 4: CMS GALERI FOTO (SMART CLIENT-SIDE RESIZER)
+           =================================================================== -->
+      <section class="tab-pane" id="tab-galeri">
+        <div class="view-header">
+          <div>
+            <h2>CMS Galeri & Dokumentasi Kegiatan</h2>
+            <p>Unggah foto kegiatan pura dengan kompresi otomatis untuk menghemat ruang Google Drive.</p>
+          </div>
+        </div>
+
+        <div class="cms-grid">
+          <!-- Upload Form with Smart Resizer -->
+          <div class="editor-card">
+            <h3>Unggah Foto Dokumentasi Baru</h3>
+            <form id="formCmsGallery">
+              <div class="form-group-dash">
+                <label for="galTitle">Keterangan / Nama Kegiatan *</label>
+                <input type="text" id="galTitle" name="galTitle" class="form-control-dash" placeholder="Contoh: Persembahyangan Bersama Rahina Tilem" required>
+              </div>
+
+              <div class="form-group-dash">
+                <label>Pilih Berkas Foto (Otomatis Di-Resize)</label>
+                <input type="file" id="galleryFileInput" accept="image/*" style="display: none;">
+                <div class="upload-dropzone" id="galleryDropzone">
+                  <div class="dropzone-icon">
+                    <svg class="icon-lg" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  </div>
+                  <div class="dropzone-text">Klik di sini untuk memilih foto kamera/ponsel</div>
+                  <div class="dropzone-hint">⚡ Foto otomatis dikompresi ke 1280px (Hemat ~85% Drive)</div>
+                </div>
+
+                <!-- Preview Box & Statistics -->
+                <div class="preview-container" id="galleryPreviewBox" style="display: none;">
+                  <img src="" class="preview-img" id="galleryPreviewImg" alt="Preview">
+                  <div class="preview-stats" id="galleryPreviewStats">
+                    <!-- Stats populated via JS -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group-dash">
+                <label for="galExternalUrl">Atau Masukkan URL Gambar Eksternal</label>
+                <input type="url" id="galExternalUrl" name="galExternalUrl" class="form-control-dash" placeholder="https://...">
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Unggah & Simpan ke Galeri Pura
+              </button>
+            </form>
+          </div>
+
+          <!-- Existing Gallery Grid -->
+          <div class="editor-card">
+            <h3>Foto Galeri Tersimpan</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.85rem;" id="cmsGalleryGrid">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 5: KAS & DANA PUNIA
+           =================================================================== -->
+      <section class="tab-pane" id="tab-kas">
+        <div class="view-header" style="flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2>Buku Kas & Dana Punia</h2>
+            <p>Catatan mutasi pemasukan dan pengeluaran kas Pura Amertha Bhumi GKN I Denpasar.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 1.25rem;">
+            <div style="text-align: right; background: var(--bg-card); padding: 0.5rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); font-weight: 600;">Saldo Riil Kas</div>
+              <div style="font-size: 1.4rem; font-weight: 700; color: #059669;" id="dashKasSaldo">Rp 0</div>
+            </div>
+            <button class="btn btn-primary" id="btnOpenKasModal" style="display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap;">
+              <svg class="icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Catat Transaksi Baru</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-card" style="margin-top: 0.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+            <h3 style="margin: 0; font-size: 1.1rem;">Buku Kas Terkini</h3>
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <select id="filterKasJenis" class="form-control" style="width: 150px; font-size: 0.85rem; padding: 0.4rem 0.65rem;">
+                <option value="ALL">Semua Mutasi</option>
+                <option value="Masuk">Pemasukan (+)</option>
+                <option value="Keluar">Pengeluaran (-)</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" style="font-size: 0.85rem; width: 100%;">
+              <thead>
+                <tr>
+                  <th style="width: 110px;">Tanggal</th>
+                  <th style="width: 95px;">Jenis</th>
+                  <th style="width: 165px;">Kategori</th>
+                  <th>Keterangan</th>
+                  <th style="width: 150px; text-align: right;">Nominal</th>
+                  <th style="text-align: center; width: 130px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="kasTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB AUDIT KAS: LOG & AUDIT MUTASI KAS (UNTUK PENGURUS / AUDIT)
+           =================================================================== -->
+      <section class="tab-pane" id="tab-audit-kas">
+        <div class="view-header">
+          <div>
+            <h2>Log & Audit Transaksi Kas</h2>
+            <p>Jejak rekam akuntabilitas mutasi keuangan pura. Mencatat setiap penambahan dan penghapusan transaksi beserta alasan untuk keperluan audit internal.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary" id="btnExportAuditLog">
+              <svg class="icon-sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Ekspor Log Audit
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <select id="filterAuditAction" class="form-control" style="width: 170px; font-size: 0.85rem;">
+                <option value="ALL">Semua Aksi</option>
+                <option value="TAMBAH">Tambah Transaksi</option>
+                <option value="HAPUS">Hapus Transaksi</option>
+              </select>
+            </div>
+            <div style="color: var(--text-muted); font-size: 0.8rem;" id="auditLogCount">
+              Menampilkan riwayat aktivitas
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" style="font-size: 0.82rem;">
+              <thead>
+                <tr>
+                  <th style="width: 150px;">Waktu & Tanggal</th>
+                  <th>Aktor (Pengurus)</th>
+                  <th style="width: 100px; text-align: center;">Aksi</th>
+                  <th>Rincian Transaksi</th>
+                  <th>Alasan / Keterangan Audit</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 6: JADWAL KEGIATAN PURA AMERTHA BHUMI
+           =================================================================== -->
+      <section class="tab-pane" id="tab-agenda">
+        <div class="view-header">
+          <div>
+            <h2>Jadwal Kegiatan Pura Amertha Bhumi</h2>
+            <p>Jadwal persembahyangan bersama, upacara rerahinan, dan kegiatan keumatan seluruh umat Pura Amertha Bhumi GKN I Denpasar.</p>
+          </div>
+        </div>
+
+        <div class="cms-card">
+          <div class="cms-card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <h3 style="margin: 0; font-size: 1.15rem;">Jadwal Kegiatan Pura Amertha Bhumi</h3>
+              <p style="margin: 0.25rem 0 0 0; font-size: 0.82rem; color: var(--text-muted);">Daftar persembahyangan bersama, upacara rerahinan, dan kegiatan keumatan di Pura Amertha Bhumi.</p>
+            </div>
+            <div id="agendaAdminAction">
+              <button class="btn btn-primary" id="btnTambahAgenda">
+                <svg class="icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>+ Tambah Kegiatan Baru</span>
+              </button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Nama Kegiatan</th>
+                  <th>Hari / Tanggal</th>
+                  <th>Waktu</th>
+                  <th>Lokasi</th>
+                  <th>Keterangan / Dresscode</th>
+                  <th id="thAgendaAksi" style="text-align: center; width: 130px;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="agendaTableBody">
+                <!-- Diisi otomatis oleh js/admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB: PENGUMUMAN & BROADCAST UMAT
+           =================================================================== -->
+      <section class="tab-pane" id="tab-pengumuman">
+        <div class="view-header">
+          <div>
+            <h2>Pengumuman & Broadcast Umat</h2>
+            <p>Informasi resmi, agenda kegiatan ngayah, dan rerahinan dari Pengurus Pura Amertha Bhumi.</p>
+          </div>
+          <div id="broadcastAdminAction" style="display: none;">
+            <button class="btn btn-primary" id="btnToggleBroadcastForm">
+              <svg class="icon-sm" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Buat Siaran Baru (Sekretaris)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Form Broadcast Baru (Khusus Role Sekretaris & Admin) -->
+        <div class="cms-card" id="broadcastCreatorBox" style="display: none; margin-bottom: 2rem; border-left: 4px solid var(--primary);">
+          <div class="cms-card-header">
+            <div>
+              <h3>Buat Siaran Pengumuman Resmi (Sekretaris)</h3>
+              <p>Pesan ini akan disiarkan ke seluruh umat di dashboard anggota dan portal internal.</p>
+            </div>
+          </div>
+          <form id="broadcastForm" style="padding: 1.5rem;">
+            <div class="form-row">
+              <div class="form-group" style="flex: 2;">
+                <label for="broadcastJudul">Judul Pengumuman *</label>
+                <input type="text" id="broadcastJudul" required placeholder="Contoh: Jadwal Ngayah Persiapan Piodalan Padmasana...">
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="broadcastKategori">Kategori Label *</label>
+                <select id="broadcastKategori" required>
+                  <option value="kegiatan">Kegiatan & Ngayah</option>
+                  <option value="penting">Penting / Mendesak</option>
+                  <option value="rerahinan">Rerahinan & Puja</option>
+                  <option value="umum">Umum & Warta</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group" style="flex: 1;">
+                <label for="broadcastTanggal">Tanggal Pelaksanaan / Berlaku</label>
+                <input type="text" id="broadcastTanggal" placeholder="Contoh: Sabtu, 28 Oktober 2026 atau Segera">
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="broadcastLink">Tautan Eksternal / WhatsApp Group (Opsional)</label>
+                <input type="url" id="broadcastLink" placeholder="https://chat.whatsapp.com/... atau link Drive">
+              </div>
+              <div class="form-group" style="flex: 0.7; display: flex; flex-direction: column; justify-content: flex-end;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.85rem; padding-bottom: 0.65rem;">
+                  <input type="checkbox" id="broadcastPinned" checked>
+                  <strong>Sematkan di Atas (Pin)</strong>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="broadcastIsi">Isi Pengumuman Lengkap *</label>
+              <textarea id="broadcastIsi" rows="4" required placeholder="Tuliskan detail pengumuman, pembagian giliran satker, pakaian adat persembahyangan, atau arahan pengurus..."></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+              <button type="button" class="btn btn-secondary" id="btnCancelBroadcast">Batal</button>
+              <button type="submit" class="btn btn-primary">
+                <svg class="icon-sm" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                <span>Siarkan Pengumuman Sekarang</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Daftar Broadcast Feed -->
+        <div class="broadcast-feed" id="broadcastFeedList">
+          <!-- Diisi otomatis oleh js/admin.js -->
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB: EDIT PROFIL SAYA & KEAMANAN AKUN
+           =================================================================== -->
+      <section class="tab-pane" id="tab-profil">
+        <div class="view-header">
+          <div>
+            <h2>Edit Profil Saya & Akun</h2>
+            <p>Perbarui identitas kepegawaian Anda di lingkungan GKN I Denpasar dan kata sandi login.</p>
+          </div>
+        </div>
+
+        <div class="profile-layout-grid">
+          <!-- Kolom Kiri: Kartu Ringkasan Akun -->
+          <div class="profile-card-user">
+            <div class="profile-large-avatar" id="profileAvatarPreview">PB</div>
+            
+            <div style="display: flex; gap: 0.4rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap;">
+              <button type="button" class="btn btn-secondary btn-sm" id="btnAmbilFotoWebcam" style="font-size: 0.76rem; padding: 0.35rem 0.65rem;" title="Ambil Foto dengan Kamera HP atau Webcam Komputer">
+                <svg class="icon-sm" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                Ambil Foto
+              </button>
+              <label for="profFotoFileInput" class="btn btn-secondary btn-sm" style="font-size: 0.76rem; padding: 0.35rem 0.65rem; cursor: pointer; margin: 0;" title="Pilih berkas foto dari perangkat">
+                <svg class="icon-sm" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Pilih Berkas
+              </label>
+              <input type="file" id="profFotoFileInput" accept="image/*" style="display: none;">
+              <input type="file" id="profFotoCameraMobile" accept="image/*" capture="user" style="display: none;">
+            </div>
+
+            <h3 class="profile-user-name" id="profileOverviewName">Nama Umat</h3>
+            <div class="profile-user-nip" id="profileOverviewNip">NIP. -</div>
+            <div class="profile-role-pill" id="profileOverviewRole">Anggota Umat GKN I</div>
+
+            <div class="profile-quick-stats">
+              <div class="profile-stat-row">
+                <span>Unit / Satker:</span>
+                <strong id="profileOverviewSatker">-</strong>
+              </div>
+              <div class="profile-stat-row">
+                <span>Jabatan:</span>
+                <strong id="profileOverviewJabatan">-</strong>
+              </div>
+              <div class="profile-stat-row">
+                <span>Status Keanggotaan:</span>
+                <strong style="color: var(--success-text);">Terverifikasi Aktif</strong>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.25rem; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: var(--radius-sm); padding: 0.85rem; font-size: 0.76rem; color: #92400E; text-align: left; line-height: 1.5;">
+              <strong>Catatan Umat:</strong><br>
+              Data profil digunakan oleh Pengurus Pura Amertha Bhumi untuk koordinasi giliran ngayah antar unit dan distribusi punia secara transparan.
+            </div>
+          </div>
+
+          <!-- Kolom Kanan: Form Edit Data Diri & Ganti Password -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            
+            <!-- Card Data Diri -->
+            <div class="cms-card">
+              <div class="cms-card-header">
+                <div>
+                  <h3>Data Diri & Kepegawaian</h3>
+                  <p>Pastikan nama dan kontak WhatsApp Anda selalu aktif untuk kemudahan koordinasi.</p>
+                </div>
+              </div>
+              <form id="profileForm" style="padding: 1.5rem;">
+                <div class="form-row">
+                  <div class="form-group" style="flex: 1.2;">
+                    <label for="profNama">Nama Lengkap (dengan Gelar) *</label>
+                    <input type="text" id="profNama" required placeholder="Nama Lengkap">
+                  </div>
+                  <div class="form-group" style="flex: 1;">
+                    <label for="profNip">Nomor Induk Pegawai (NIP)</label>
+                    <input type="text" id="profNip" readonly disabled style="background: var(--bg-card-subtle); color: var(--text-muted); cursor: not-allowed;">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group" style="flex: 1.2;">
+                    <label for="profSatker">Unit Kerja / Satker GKN I Denpasar *</label>
+                    <select id="profSatker" required>
+                      <option value="Kanwil DJPb Provinsi Bali">Kanwil DJPb Provinsi Bali</option>
+                      <option value="KPP Pratama Denpasar Timur (DJP)">KPP Pratama Denpasar Timur (DJP)</option>
+                      <option value="KPP Pratama Denpasar Barat (DJP)">KPP Pratama Denpasar Barat (DJP)</option>
+                      <option value="KPPBC TMP A Denpasar (DJBC)">KPPBC TMP A Denpasar (DJBC)</option>
+                      <option value="KPKNL Denpasar (DJKN)">KPKNL Denpasar (DJKN)</option>
+                      <option value="Balai Diklat Keuangan (BDK) Denpasar">Balai Diklat Keuangan (BDK) Denpasar</option>
+                      <option value="Sekretariat Perwakilan Kemenkeu Bali">Sekretariat Perwakilan Kemenkeu Bali</option>
+                      <option value="Lainnya di Lingkungan GKN I">Lainnya di Lingkungan GKN I</option>
+                    </select>
+                  </div>
+                  <div class="form-group" style="flex: 1;">
+                    <label for="profJabatan">Jabatan / Seksi</label>
+                    <input type="text" id="profJabatan" placeholder="Contoh: Pelaksana / Penata Muda">
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group" style="flex: 1;">
+                    <label for="profWhatsapp">Nomor WhatsApp Aktif *</label>
+                    <input type="tel" id="profWhatsapp" required placeholder="08xxxxxxxxxx">
+                  </div>
+                  <div class="form-group" style="flex: 1.5;">
+                    <label for="profAlamat">Alamat Domisili di Bali</label>
+                    <input type="text" id="profAlamat" placeholder="Contoh: Jl. Hayam Wuruk No. 12, Denpasar">
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+                  <button type="submit" class="btn btn-primary">
+                    <svg class="icon-sm" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                    <span>Simpan Perubahan Profil</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Card Ganti Password -->
+            <div class="cms-card">
+              <div class="cms-card-header">
+                <div>
+                  <h3>Keamanan Akun & Kata Sandi</h3>
+                  <p>Ganti kata sandi bawaan (default NIP) untuk melindungi akun Anda.</p>
+                </div>
+              </div>
+              <form id="passwordForm" style="padding: 1.5rem;">
+                <div class="form-row">
+                  <div class="form-group" style="flex: 1;">
+                    <label for="passLama">Kata Sandi Saat Ini *</label>
+                    <input type="password" id="passLama" required placeholder="Masukkan kata sandi saat ini">
+                  </div>
+                  <div class="form-group" style="flex: 1;">
+                    <label for="passBaru">Kata Sandi Baru *</label>
+                    <input type="password" id="passBaru" required placeholder="Minimal 6 karakter">
+                  </div>
+                  <div class="form-group" style="flex: 1;">
+                    <label for="passKonfirmasi">Konfirmasi Kata Sandi Baru *</label>
+                    <input type="password" id="passKonfirmasi" required placeholder="Ulangi kata sandi baru">
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+                  <button type="submit" class="btn btn-primary">
+                    <svg class="icon-sm" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Perbarui Kata Sandi</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+  <!-- GLOBAL MODAL POPUP DIALOG -->
+  <div class="modal-backdrop" id="globalModalBackdrop">
+    <div class="modal-dialog" id="globalModalDialog">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Detail Data</h3>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Tutup">
+          <svg class="icon-sm" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic Modal Content -->
+      </div>
+      <div class="modal-footer" id="modalFooter">
+        <button type="button" class="btn btn-secondary" id="modalBtnClose">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/image-compressor.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    // Mobile Sidebar Drawer Toggle
+    document.addEventListener("DOMContentLoaded", () => {
+      const toggle = document.getElementById("sidebarMobileToggle");
+      const sidebar = document.getElementById("dashboardSidebar");
+      const backdrop = document.getElementById("sidebarBackdrop");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("open");
+        backdrop.classList.toggle("show");
+      }
+
+      if (toggle) toggle.addEventListener("click", toggleSidebar);
+      if (backdrop) backdrop.addEventListener("click", toggleSidebar);
+
+      // Close sidebar when clicking any navigation tab on mobile
+      document.querySelectorAll(".nav-tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if (window.innerWidth <= 768) {
+            sidebar.classList.remove("open");
+            backdrop.classList.remove("show");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

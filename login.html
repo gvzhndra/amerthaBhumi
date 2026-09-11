@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Masuk Portal | Pura Amertha Bhumi GKN I Denpasar</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23D97706%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><circle cx=%2212%22 cy=%2212%22 r=%2210%22 fill=%22%23FFFBEB%22/><line x1=%222%22 y1=%2212%22 x2=%2222%22 y2=%2212%22/><path d=%22M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z%22/></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      background: linear-gradient(180deg, #FFFFFF 0%, var(--bg-subtle) 100%);
+      position: relative;
+    }
+
+    .login-card {
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      max-width: 440px;
+      width: 100%;
+      padding: 2.25rem;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      z-index: 2;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .login-emblem {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 1rem auto;
+      background: var(--bg-accent-light);
+      border: 1px solid #FCD34D;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-dark);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .login-emblem svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--primary-dark);
+    }
+
+    .login-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .login-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .alert-error {
+      background: var(--danger-bg);
+      border: 1px solid #FECACA;
+      color: var(--danger-text);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    /* Demo Account Quick Switcher */
+    .demo-accounts {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .demo-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .demo-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .demo-chip {
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .demo-chip:hover {
+      background: var(--bg-accent-soft);
+      border-color: #FCD34D;
+      color: var(--primary-dark);
+    }
+
+    .demo-chip .role-tag {
+      font-size: 0.68rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .demo-chip:hover .role-tag {
+      background: var(--bg-accent-light);
+      color: var(--primary-dark);
+      border-color: #FCD34D;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-emblem">
+          <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+            <path d="M2 12h20"></path>
+          </svg>
+        </div>
+        <h1 class="login-title">Portal Terpadu</h1>
+        <p class="login-sub">Pura Amertha Bhumi Gedung Keuangan Negara I Denpasar</p>
+      </div>
+
+      <div class="alert-error" id="loginAlert"></div>
+
+      <form id="formLogin">
+        <div class="form-group">
+          <label for="loginNip">NIP (Nomor Induk Pegawai)</label>
+          <input type="text" id="loginNip" name="nip" class="form-control" placeholder="Masukkan 18 digit NIP" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Kata Sandi</label>
+          <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Kata sandi default adalah NIP Anda" required>
+          <span style="font-size: 0.75rem; color: var(--primary); margin-top: 0.35rem; display: block; font-weight: 500;">
+            Info: Kata sandi awal sama dengan NIP Anda.
+          </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnSubmitLogin" style="width: 100%; margin-top: 0.75rem;">
+          Masuk ke Dashboard
+        </button>
+      </form>
+
+      <!-- Akun Uji Coba Cepat (Khusus Mode Development / Demo) -->
+      <div class="demo-accounts" id="demoAccountsSection">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
+          <div class="demo-title" style="margin-bottom: 0;">PILIH CEPAT UNTUK DEMO PERAN (ROLE)</div>
+          <span style="font-size: 0.68rem; color: #B45309; background: rgba(217, 119, 6, 0.12); border: 1px solid rgba(217, 119, 6, 0.25); border-radius: 4px; padding: 0.1rem 0.45rem; font-weight: 600;">Dev Mode</span>
+        </div>
+        <div class="demo-chips">
+          <div class="demo-chip" data-nip="198501012010121001">
+            <span><b>I Ketut Sudirga</b> (NIP: ...1001)</span>
+            <span class="role-tag">Super Admin</span>
+          </div>
+          <div class="demo-chip" data-nip="199203152015021002">
+            <span><b>Ni Putu Saraswati</b> (NIP: ...1002)</span>
+            <span class="role-tag">Sekretaris</span>
+          </div>
+          <div class="demo-chip" data-nip="199008202014032003">
+            <span><b>I Wayan Arnawa</b> (NIP: ...1003)</span>
+            <span class="role-tag">Bendahara</span>
+          </div>
+          <div class="demo-chip" data-nip="199804102021022001">
+            <span><b>Ni Luh Putu Ayu</b> (NIP: ...2001)</span>
+            <span class="role-tag">Humas</span>
+          </div>
+          <div class="demo-chip" data-nip="199507112019011004">
+            <span><b>I Made Wira</b> (NIP: ...1004)</span>
+            <span class="role-tag">Anggota Umat</span>
+          </div>
+        </div>
+        <div style="text-align: right; margin-top: 0.5rem;">
+          <button type="button" id="btnHideDemoDev" style="background: none; border: none; font-size: 0.72rem; color: var(--text-muted); cursor: pointer; text-decoration: underline;">
+            Sembunyikan Demo Ini
+          </button>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <a href="index.html" style="font-size: 0.82rem; color: var(--text-muted);">
+          ← Kembali ke Halaman Utama Publik
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // KONTROL ENVIRONMENT PRODUCTION VS DEVELOPMENT:
+      // Di Production (hostname bukan localhost/127.0.0.1/file), kotak demo otomatis tersembunyi 100%.
+      // Di Dev, pengguna juga bisa sembunyikan via tombol atau URL "?demo=false".
+      const isLocalDev = window.location.hostname === "localhost" || 
+                         window.location.hostname === "127.0.0.1" || 
+                         window.location.hostname.endsWith(".local") ||
+                         window.location.protocol === "file:";
+      const urlParams = new URLSearchParams(window.location.search);
+      const forceDemo = urlParams.get("demo"); // '?demo=true' atau '?demo=false'
+      const isHiddenByUser = localStorage.getItem("HIDE_DEMO_ACCOUNTS") === "true";
+
+      const demoSection = document.getElementById("demoAccountsSection");
+      if (demoSection) {
+        if (forceDemo === "false" || (!isLocalDev && forceDemo !== "true") || (isLocalDev && isHiddenByUser && forceDemo !== "true")) {
+          demoSection.style.display = "none";
+        }
+      }
+
+      if (typeof AuthService !== "undefined") {
+        const current = AuthService.getCurrentUser();
+        if (current) {
+          window.location.href = "admin.html";
+          return;
+        }
+      }
+
+      const btnHideDemo = document.getElementById("btnHideDemoDev");
+      if (btnHideDemo && demoSection) {
+        btnHideDemo.addEventListener("click", () => {
+          demoSection.style.display = "none";
+          localStorage.setItem("HIDE_DEMO_ACCOUNTS", "true");
+        });
+      }
+
+      const form = document.getElementById("formLogin");
+      const alertBox = document.getElementById("loginAlert");
+      const submitBtn = document.getElementById("btnSubmitLogin");
+
+      document.querySelectorAll(".demo-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          const nip = chip.getAttribute("data-nip");
+          document.getElementById("loginNip").value = nip;
+          document.getElementById("loginPassword").value = nip;
+          submitBtn.focus();
+        });
+      });
+
+      if (form) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          alertBox.style.display = "none";
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Memverifikasi...";
+
+          const nip = form.nip.value;
+          const password = form.password.value;
+
+          try {
+            await AuthService.login(nip, password);
+            window.location.href = "admin.html";
+          } catch (err) {
+            alertBox.textContent = err.message;
+            alertBox.style.display = "block";
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>Masuk ke Dashboard</span> <svg class="icon-sm" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
