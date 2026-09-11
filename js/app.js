@@ -1,7 +1,4 @@
-/**
- * Pura Amertha Bhumi GKN I Denpasar
- * Public Portal Main Logic (index.html)
- */
+const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxvqiwnvJthhvcbRV9ozBU2-QRMVPyQInuK0sr9dVWNVQXJ-TH-cZMUg6KtSyLK5MFx/exec";
 
 document.addEventListener("DOMContentLoaded", () => {
   initNavbar();
@@ -183,10 +180,22 @@ function initRegistrationModal() {
         status: "Menunggu Verifikasi"
       };
 
-      // Simpan ke local database untuk demonstrasi / sinkronisasi GAS
+      // Simpan ke local database untuk demonstrasi / ketersediaan offline
       let list = JSON.parse(localStorage.getItem("DATA_UMAT_LOCAL") || "[]");
       list.unshift(dataUmat);
       localStorage.setItem("DATA_UMAT_LOCAL", JSON.stringify(list));
+
+      // Kirim pendaftaran ke Google Apps Script Web App (Google Sheets)
+      try {
+        fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "registerUmat",
+            ...dataUmat
+          })
+        }).catch(err => console.warn("Sync GAS deferred:", err));
+      } catch (e) {}
 
       setTimeout(() => {
         submitBtn.disabled = false;

@@ -1,7 +1,4 @@
-/**
- * Pura Amertha Bhumi GKN I Denpasar
- * Admin Dashboard CRM & CMS Controller (admin.html)
- */
+const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxvqiwnvJthhvcbRV9ozBU2-QRMVPyQInuK0sr9dVWNVQXJ-TH-cZMUg6KtSyLK5MFx/exec";
 
 /* ==========================================================================
    INITIAL REPOSITORY DATASETS (DECLARED FIRST TO AVOID TDZ ERRORS)
@@ -1704,6 +1701,24 @@ function initKasPuniaModule() {
         }
 
         localStorage.setItem("KAS_PUNIA_LOCAL", JSON.stringify(kasList));
+
+        // Sinkronisasi asinkron ke Google Sheets via Google Apps Script Web App
+        try {
+          fetch(API_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "saveKas",
+              id: isEdit ? item.id : newKas.id,
+              tgl: tglVal,
+              jenis: jenisVal,
+              kategori: catVal,
+              nominal: nominalVal,
+              ket: ketVal
+            })
+          }).catch(err => console.warn("GAS saveKas deferred:", err));
+        } catch (e) {}
+
         closeModal();
         render();
         updateOverviewKpi();
