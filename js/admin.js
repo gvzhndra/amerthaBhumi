@@ -321,7 +321,9 @@ function showUmatDetailModal(umat) {
   const currentUser = (window.AuthService && AuthService.getCurrentUser && AuthService.getCurrentUser()) || { role: "admin" };
   const canAssignRole = (currentUser && currentUser.role === "admin");
 
-  const body = `
+    const hasRealNip = Boolean(umat.nip && umat.nip.trim() !== "" && umat.nip.toLowerCase() !== (umat.username || umat.id || "").toLowerCase() && /^\d+$/.test(umat.nip.trim()));
+
+    const body = `
     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;">
       <div style="width: 56px; height: 56px; border-radius: 99px; background: linear-gradient(135deg, var(--primary-light), #FDE68A); color: var(--primary-dark); font-size: 1.35rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--border-focus); flex-shrink: 0; overflow: hidden;">
         ${avatarContent}
@@ -337,8 +339,8 @@ function showUmatDetailModal(umat) {
 
     <div class="detail-umat-card">
       <div class="detail-row">
-        <span class="detail-label">NIP Kemenkeu</span>
-        <span class="detail-value" style="color: var(--primary); font-family: monospace; font-size: 0.95rem;">${escapeHtml(umat.nip)}</span>
+        <span class="detail-label">Nomor Induk Pegawai (NIP)</span>
+        <span class="detail-value" style="color: var(--primary); font-family: monospace; font-size: 0.95rem;">${hasRealNip ? escapeHtml(umat.nip) : '-'}</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Peran Akun</span>
@@ -349,8 +351,8 @@ function showUmatDetailModal(umat) {
         <span class="detail-value">${escapeHtml(umat.satker)}</span>
       </div>
       <div class="detail-row">
-        <span class="detail-label">Jabatan / Golongan</span>
-        <span class="detail-value">${escapeHtml(umat.jabatan || '-')}</span>
+        <span class="detail-label">Role</span>
+        <span class="detail-value">${escapeHtml(umat.jabatan || umat.roleLabel || '-')}</span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Nomor WhatsApp</span>
