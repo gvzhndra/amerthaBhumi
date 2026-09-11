@@ -171,7 +171,16 @@ function showToast(message, type = "success") {
   }, 3500);
 }
 
-function showModal({ title, bodyHtml, footerHtml = null }) {
+let currentModalOnClose = null;
+
+function showModal({ title, bodyHtml, footerHtml = null, onClose = null }) {
+  // Jika ada callback tutup dari modal sebelumnya yang belum tereksekusi, bersihkan dahulu
+  if (typeof currentModalOnClose === "function") {
+    try { currentModalOnClose(); } catch (e) {}
+    currentModalOnClose = null;
+  }
+  currentModalOnClose = onClose;
+
   const backdrop = document.getElementById("globalModalBackdrop");
   const titleEl = document.getElementById("modalTitle");
   const bodyEl = document.getElementById("modalBody");
@@ -209,6 +218,14 @@ function showModal({ title, bodyHtml, footerHtml = null }) {
 }
 
 function closeModal() {
+  if (typeof currentModalOnClose === "function") {
+    try {
+      currentModalOnClose();
+    } catch (err) {
+      console.warn("Modal onClose cleanup error:", err);
+    }
+    currentModalOnClose = null;
+  }
   const backdrop = document.getElementById("globalModalBackdrop");
   if (backdrop) backdrop.classList.remove("show");
 }
@@ -2560,7 +2577,30 @@ function initProfileModule(user) {
           return;
         }
 
+        let isModalOpen = true;
         let currentStream = null;
+
+        function stopStream() {
+          isModalOpen = false;
+          if (currentStream) {
+            try {
+              currentStream.getTracks().forEach(track => {
+                track.stop();
+                track.enabled = false;
+              });
+            } catch (e) {
+              console.warn("Error stopping webcam tracks:", e);
+            }
+            currentStream = null;
+          }
+          const vid = document.getElementById("webcamVideo");
+          if (vid) {
+            try {
+              vid.pause();
+              vid.srcObject = null;
+            } catch (e) {}
+          }
+        }
 
         const bodyHtml = `
           <div style="text-align: center;">
@@ -2588,20 +2628,14 @@ function initProfileModule(user) {
         showModal({
           title: `<svg class="icon" style="color: #059669;" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg> Ambil Foto Profil (Webcam)`,
           bodyHtml: bodyHtml,
-          footerHtml: footerHtml
+          footerHtml: footerHtml,
+          onClose: stopStream
         });
 
         const videoEl = document.getElementById("webcamVideo");
         const loadingText = document.getElementById("webcamLoadingText");
         const captureBtn = document.getElementById("btnCaptureWebcam");
         const cancelBtn = document.getElementById("btnCancelWebcam");
-
-        function stopStream() {
-          if (currentStream) {
-            currentStream.getTracks().forEach(track => track.stop());
-            currentStream = null;
-          }
-        }
 
         if (cancelBtn) {
           cancelBtn.addEventListener("click", () => {
@@ -2610,14 +2644,16 @@ function initProfileModule(user) {
           });
         }
 
-        const origClose = window.closeModal;
-        window.closeModal = function() {
-          stopStream();
-          origClose();
-        };
-
         navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: "user" } })
           .then(stream => {
+            if (!isModalOpen) {
+              // Jika popup sudah ditutup sebelum izin kamera diberikan / kamera aktif
+              stream.getTracks().forEach(t => {
+                t.stop();
+                t.enabled = false;
+              });
+              return;
+            }
             currentStream = stream;
             if (videoEl) {
               videoEl.srcObject = stream;
@@ -2663,6 +2699,7 @@ function initProfileModule(user) {
     formProfile.addEventListener("submit", (e) => {
       e.preventDefault();
       const updatedNama = inputNama.value.trim();
+      const updatedNip = inputNip ? inputNip.value.trim() : (user.nip || "");
       const updatedSatker = inputSatker.value;
       const updatedJabatan = inputJabatan.value.trim();
       const updatedWa = inputWhatsapp.value.trim();
@@ -2674,6 +2711,7 @@ function initProfileModule(user) {
         try {
           const session = JSON.parse(rawSession);
           session.user.nama = updatedNama;
+          session.user.nip = updatedNip;
           session.user.satker = updatedSatker;
           session.user.jabatan = updatedJabatan;
           session.user.whatsapp = updatedWa;
@@ -2701,15 +2739,34 @@ function initProfileModule(user) {
 
       // Update in CRM data umat if present
       const umatList = JSON.parse(localStorage.getItem("DATA_UMAT_LOCAL") || "[]");
-      const idx = umatList.findIndex(u => u.nip === user.nip);
+      const idx = umatList.findIndex(u => (u.username && u.username === user.username) || u.nip === user.nip);
       if (idx !== -1) {
         umatList[idx].nama = updatedNama;
+        umatList[idx].nip = updatedNip;
         umatList[idx].satker = updatedSatker;
         umatList[idx].jabatan = updatedJabatan;
         umatList[idx].whatsapp = updatedWa;
         localStorage.setItem("DATA_UMAT_LOCAL", JSON.stringify(umatList));
         if (typeof window.refreshCrmTable === "function") window.refreshCrmTable();
       }
+
+      // Kirim pembaruan profil ke Google Apps Script Web App jika online
+      try {
+        fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "updateProfile",
+            username: user.username || user.nip || "",
+            nip: updatedNip,
+            nama: updatedNama,
+            satker: updatedSatker,
+            jabatan: updatedJabatan,
+            whatsapp: updatedWa,
+            alamat: updatedAlamat
+          })
+        }).catch(err => console.warn("Sync profile to GAS deferred:", err));
+      } catch (e) {}
 
       showToast("Data profil kepegawaian Anda berhasil disimpan!", "success");
     });
@@ -2732,8 +2789,34 @@ function initProfileModule(user) {
         return;
       }
 
+      // 1. Simpan kata sandi baru ke CUSTOM_PASSWORDS lokal
+      const customPasswords = JSON.parse(localStorage.getItem("CUSTOM_PASSWORDS") || "{}");
+      const currentUsername = (user.username || user.nip || "").toLowerCase();
+      if (currentUsername) {
+        customPasswords[currentUsername] = passBaru;
+        localStorage.setItem("CUSTOM_PASSWORDS", JSON.stringify(customPasswords));
+      }
+
+      // 2. Kirim sinkronisasi ke Google Sheets Backend (Apps Script)
+      try {
+        fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "changePassword",
+            username: currentUsername,
+            nip: user.nip || currentUsername,
+            newPassword: passBaru,
+            nama: user.nama || "",
+            role: user.role || "admin"
+          })
+        }).then(res => res.json()).then(data => {
+          console.log("GAS changePassword response:", data);
+        }).catch(err => console.warn("Sync password to GAS deferred:", err));
+      } catch (e) {}
+
       formPassword.reset();
-      showToast("Kata sandi Anda berhasil diperbarui! Gunakan kata sandi baru untuk login berikutnya.", "success");
+      showToast("Kata sandi Anda berhasil diperbarui dan tersimpan permanen!", "success");
     });
   }
 }

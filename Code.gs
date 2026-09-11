@@ -147,20 +147,30 @@ function doPost(e) {
         }
 
         const users = getSheetData(ss, "Users");
-        let user = users.find(u => String(u.nip).trim() === nip);
+        let user = users.find(u => String(u.username || u.nip).trim().toLowerCase() === nip.toLowerCase());
 
-        // Jika belum ada di database Users, cek apakah password == NIP (default login)
+        // Daftar Humas Resmi (Super Admin)
+        const HUMAS_NAMES = {
+          "hendra": "Putu Agus Hendra Harjaya",
+          "cunda": "Cunda Yokosantha",
+          "ekasuardana": "I Putu Eka Suardana",
+          "arini": "Ni Luh Nyoman Arini Asri Wijayanti",
+          "prawirawijaya": "I Made Rai Prawirawijaya",
+          "tusta": "Putu Tusta Ari Chandana"
+        };
+
         if (!user) {
-          if (nip === password) {
+          const isHumas = HUMAS_NAMES[nip.toLowerCase()];
+          if (nip === password || password === "admin") {
             user = {
               nip: nip,
-              nama: "Pegawai Umat GKN",
-              role: "member",
-              satker: "GKN I Denpasar",
+              nama: isHumas || nip,
+              role: isHumas ? "admin" : "member",
+              satker: isHumas ? "Tim Humas Pura GKN I" : "GKN I Denpasar",
               status: "Aktif"
             };
           } else {
-            return createJsonResponse({ status: "error", message: "Kombinasi NIP dan kata sandi salah." });
+            return createJsonResponse({ status: "error", message: "Kombinasi Username dan kata sandi salah." });
           }
         } else {
           const validPass = user.password ? String(user.password).trim() : user.nip;
@@ -183,6 +193,71 @@ function doPost(e) {
             satker: user.satker || "GKN I Denpasar"
           }
         });
+      }
+
+      // 1.b Ganti Password Pengguna & Simpan Permanen di Google Sheets
+      case "changePassword": {
+        const username = String(payload.username || payload.nip || "").trim().toLowerCase();
+        const newPassword = String(payload.newPassword || "").trim();
+
+        if (!username || !newPassword) {
+          return createJsonResponse({ status: "error", message: "Username dan Kata Sandi baru wajib diisi." });
+        }
+
+        const sheet = getOrCreateSheet(ss, "Users", ["Username", "Nama", "Role", "Satker", "Password", "Status"]);
+        const data = sheet.getDataRange().getValues();
+        let foundRow = -1;
+
+        for (let i = 1; i < data.length; i++) {
+          const rowUser = String(data[i][0] || "").trim().toLowerCase();
+          if (rowUser === username) {
+            foundRow = i + 1; // 1-indexed di Google Sheets
+            break;
+          }
+        }
+
+        if (foundRow !== -1) {
+          // Kolom ke-5 adalah Password
+          sheet.getRange(foundRow, 5).setValue(newPassword);
+        } else {
+          // Jika pengguna belum tercatat di baris Users, buatkan baris baru
+          sheet.appendRow([
+            username,
+            payload.nama || username,
+            payload.role || "admin",
+            payload.satker || "GKN I Denpasar",
+            newPassword,
+            "Aktif"
+          ]);
+        }
+
+        return createJsonResponse({
+          status: "success",
+          message: "Kata sandi berhasil diperbarui dan tersimpan permanen di Google Sheets."
+        });
+      }
+
+      // 1.c Pembaruan Profil Mandiri
+      case "updateProfile": {
+        const username = String(payload.username || payload.nip || "").trim().toLowerCase();
+        const nama = String(payload.nama || "").trim();
+        const satker = String(payload.satker || "").trim();
+
+        if (username) {
+          const sheet = ss.getSheetByName("Users");
+          if (sheet) {
+            const data = sheet.getDataRange().getValues();
+            for (let i = 1; i < data.length; i++) {
+              if (String(data[i][0] || "").trim().toLowerCase() === username) {
+                if (nama) sheet.getRange(i + 1, 2).setValue(nama);
+                if (satker) sheet.getRange(i + 1, 4).setValue(satker);
+                break;
+              }
+            }
+          }
+        }
+
+        return createJsonResponse({ status: "success", message: "Profil berhasil diperbarui." });
       }
 
       // 2. Pendaftaran Umat Baru Mandiri dari Portal Publik

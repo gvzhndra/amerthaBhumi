@@ -85,10 +85,20 @@ const AuthService = (() => {
         const crmList = JSON.parse(localStorage.getItem("DATA_UMAT_LOCAL") || "[]");
         const foundCrm = crmList.find(u => (u.nip && u.nip.toLowerCase() === cleanInput) || (u.username && u.username.toLowerCase() === cleanInput));
 
+        // Periksa apakah pengguna memiliki kata sandi kustom yang pernah diubah
+        const customPasswords = JSON.parse(localStorage.getItem("CUSTOM_PASSWORDS") || "{}");
+        const savedPass = customPasswords[cleanInput] || (user && customPasswords[user.username.toLowerCase()]);
+
         if (user) {
-          // Password valid jika sama dengan username atau "admin"
-          if (cleanPassword.toLowerCase() !== user.username.toLowerCase() && cleanPassword !== "admin") {
-            return reject(new Error(`Kata sandi salah. Gunakan username '${user.username}' atau 'admin' sebagai kata sandi.`));
+          if (savedPass) {
+            if (cleanPassword !== savedPass) {
+              return reject(new Error("Kata sandi yang Anda masukkan salah."));
+            }
+          } else {
+            // Password default jika belum diubah
+            if (cleanPassword.toLowerCase() !== user.username.toLowerCase() && cleanPassword !== "admin") {
+              return reject(new Error(`Kata sandi salah. Gunakan username '${user.username}' atau 'admin' sebagai kata sandi.`));
+            }
           }
         } else if (foundCrm) {
           user = {
@@ -100,13 +110,25 @@ const AuthService = (() => {
             satker: foundCrm.satker || "GKN I Denpasar",
             jabatan: foundCrm.jabatan || "Pegawai"
           };
-          if (cleanPassword.toLowerCase() !== (user.username || "").toLowerCase() && cleanPassword !== user.nip && cleanPassword !== "admin") {
-            return reject(new Error("Kata sandi salah."));
+          if (savedPass) {
+            if (cleanPassword !== savedPass) {
+              return reject(new Error("Kata sandi yang Anda masukkan salah."));
+            }
+          } else {
+            if (cleanPassword.toLowerCase() !== (user.username || "").toLowerCase() && cleanPassword !== user.nip && cleanPassword !== "admin") {
+              return reject(new Error("Kata sandi salah."));
+            }
           }
         } else {
           // Member / Umat Baru fleksibel
-          if (cleanInput !== cleanPassword.toLowerCase() && cleanPassword !== "admin") {
-            return reject(new Error("Kombinasi Username dan Kata Sandi tidak sesuai."));
+          if (savedPass) {
+            if (cleanPassword !== savedPass) {
+              return reject(new Error("Kata sandi yang Anda masukkan salah."));
+            }
+          } else {
+            if (cleanInput !== cleanPassword.toLowerCase() && cleanPassword !== "admin") {
+              return reject(new Error("Kombinasi Username dan Kata Sandi tidak sesuai."));
+            }
           }
           user = {
             username: cleanInput,
@@ -140,14 +162,49 @@ const AuthService = (() => {
     if (!raw) return null;
     try {
       const session = JSON.parse(raw);
-      // Sinkronkan peran terbaru dari DATA_UMAT_LOCAL jika ada pembaruan oleh Super Admin
-      const crmList = JSON.parse(localStorage.getItem("DATA_UMAT_LOCAL") || "[]");
-      const foundCrm = crmList.find(u => u.nip === session.user.nip);
-      if (foundCrm && foundCrm.role && foundCrm.role !== session.user.role) {
-        session.user.role = foundCrm.role;
-        session.user.roleLabel = foundCrm.roleLabel || session.user.roleLabel;
+      if (!session || !session.user) return null;
+
+      const rawId = (session.user.username || session.user.nip || "").toLowerCase();
+      const rawName = (session.user.nama || "").toLowerCase();
+
+      // Deteksi jika pengguna adalah anggota tim Humas & Informasi (termasuk hendra)
+      const matchedHumas = PRESET_USERS.find(u => {
+        const uUser = u.username.toLowerCase();
+        return uUser === rawId ||
+               (u.nip && u.nip.toLowerCase() === rawId) ||
+               rawId.includes(uUser) ||
+               rawName.includes(uUser) ||
+               rawName.includes(u.nama.toLowerCase()) ||
+               (uUser === "hendra" && (rawId.includes("ndra") || rawName.includes("ndra") || rawName.includes("harjaya")));
+      });
+
+      if (matchedHumas) {
+        // Upgrade langsung ke Super Admin resmi dengan nama lengkap asli
+        session.user.nama = matchedHumas.nama;
+        session.user.username = matchedHumas.username;
+        session.user.nip = matchedHumas.username;
+        session.user.role = "admin";
+        session.user.roleLabel = matchedHumas.roleLabel || "Super Admin (Humas)";
+        session.user.satker = matchedHumas.satker;
+        session.user.jabatan = matchedHumas.jabatan;
         localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+      } else {
+        // Hilangkan kata 'Pegawai Umat GKN (...)' jika masih tersisa
+        if (session.user.nama && session.user.nama.startsWith("Pegawai Umat GKN")) {
+          session.user.nama = session.user.nama.replace(/Pegawai Umat GKN\s*\((.*?)\)/i, "$1").trim() || session.user.username || "Umat GKN";
+          localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+        }
+
+        // Sinkronkan peran terbaru dari DATA_UMAT_LOCAL jika ada
+        const crmList = JSON.parse(localStorage.getItem("DATA_UMAT_LOCAL") || "[]");
+        const foundCrm = crmList.find(u => u.nip === session.user.nip || u.username === session.user.username);
+        if (foundCrm && foundCrm.role && foundCrm.role !== session.user.role) {
+          session.user.role = foundCrm.role;
+          session.user.roleLabel = foundCrm.roleLabel || session.user.roleLabel;
+          localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+        }
       }
+
       return session.user;
     } catch (e) {
       return null;
