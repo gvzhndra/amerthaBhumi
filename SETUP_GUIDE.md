@@ -52,8 +52,8 @@ Bila Apps Script dibuat terpisah (bukan via menu *Ekstensi > Apps Script* di Goo
 * Masukkan ke:
   ```javascript
   const CONFIG = {
-    SPREADSHEET_ID: "TEMPELKAN_ID_DI_SINI",
-    DRIVE_FOLDER_ID: "TEMPELKAN_ID_FOLDER_GOOGLE_DRIVE_DI_SINI",
+    SPREADSHEET_ID: "1prRb8vbbG1usgzRmSgyR0EfJUBvK1Db9ji0rwHkiAO0",
+    DRIVE_FOLDER_ID: "TEMPELKAN_ID_FOLDER_GOOGLE_DRIVE_ANDA_DI_SINI",
     SECRET_SALT: "AMERTHA_BHUMI_GKN1_BALI_2026"
   };
   ```

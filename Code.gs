@@ -22,7 +22,7 @@
 // SPREADSHEET_ID tidak wajib diisi karena akan terdeteksi otomatis.
 // Namun jika standalone script, masukkan ID Spreadsheet di bawah:
 const CONFIG = {
-  SPREADSHEET_ID: "MASUKKAN_ID_SPREADSHEET_DI_SINI",
+  SPREADSHEET_ID: "1prRb8vbbG1usgzRmSgyR0EfJUBvK1Db9ji0rwHkiAO0",
   DRIVE_FOLDER_ID: "MASUKKAN_ID_FOLDER_GOOGLE_DRIVE_DI_SINI",
   SECRET_SALT: "AMERTHA_BHUMI_GKN1_BALI_2026"
 };
