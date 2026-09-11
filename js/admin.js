@@ -2472,13 +2472,22 @@ function initProfileModule(user) {
       }
     }
     if (nameEl) nameEl.textContent = u.nama || "-";
-    if (nipEl) nipEl.textContent = "NIP. " + (u.nip || "-");
+    const hasRealNip = Boolean(u.nip && u.nip.trim() !== "" && u.nip.toLowerCase() !== (u.username || "").toLowerCase());
+    if (nipEl) {
+      if (hasRealNip) {
+        nipEl.textContent = "NIP. " + u.nip;
+        nipEl.style.display = "block";
+      } else {
+        nipEl.textContent = "";
+        nipEl.style.display = "none";
+      }
+    }
     if (roleEl) roleEl.textContent = u.roleLabel || u.role;
     if (satkerEl) satkerEl.textContent = u.satker || "Gedung Keuangan Negara I Denpasar";
     if (jabatanEl) jabatanEl.textContent = u.jabatan || "-";
 
     if (inputNama) inputNama.value = u.nama || "";
-    if (inputNip) inputNip.value = u.nip || "";
+    if (inputNip) inputNip.value = hasRealNip ? u.nip : "";
     if (inputSatker && u.satker) {
       for (let i = 0; i < inputSatker.options.length; i++) {
         if (inputSatker.options[i].value.toLowerCase().includes(u.satker.toLowerCase()) || 
@@ -2712,7 +2721,8 @@ function initProfileModule(user) {
     formProfile.addEventListener("submit", (e) => {
       e.preventDefault();
       const updatedNama = inputNama.value.trim();
-      const updatedNip = inputNip ? inputNip.value.trim() : (user.nip || "");
+      const rawNip = inputNip ? inputNip.value.trim() : "";
+      const updatedNip = (rawNip.toLowerCase() !== (user.username || "").toLowerCase()) ? rawNip : "";
       const updatedSatker = inputSatker.value;
       const updatedJabatan = inputJabatan.value.trim();
       const updatedWa = inputWhatsapp.value.trim();

@@ -9,7 +9,7 @@ const AuthService = (() => {
   const PRESET_USERS = [
     {
       username: "cunda",
-      nip: "cunda",
+      nip: "",
       nama: "Cunda Yokosantha",
       role: "admin",
       roleLabel: "Koordinator Humas & Informasi (Super Admin)",
@@ -18,7 +18,7 @@ const AuthService = (() => {
     },
     {
       username: "hendra",
-      nip: "hendra",
+      nip: "",
       nama: "Putu Agus Hendra Harjaya",
       role: "admin",
       roleLabel: "Humas & Informasi (Super Admin)",
@@ -27,7 +27,7 @@ const AuthService = (() => {
     },
     {
       username: "ekasuardana",
-      nip: "ekasuardana",
+      nip: "",
       nama: "I Putu Eka Suardana",
       role: "admin",
       roleLabel: "Humas & Informasi (Super Admin)",
@@ -36,7 +36,7 @@ const AuthService = (() => {
     },
     {
       username: "arini",
-      nip: "arini",
+      nip: "",
       nama: "Ni Luh Nyoman Arini Asri Wijayanti",
       role: "admin",
       roleLabel: "Humas & Informasi (Super Admin)",
@@ -45,7 +45,7 @@ const AuthService = (() => {
     },
     {
       username: "prawirawijaya",
-      nip: "prawirawijaya",
+      nip: "",
       nama: "I Made Rai Prawirawijaya",
       role: "admin",
       roleLabel: "Humas & Informasi (Super Admin)",
@@ -54,7 +54,7 @@ const AuthService = (() => {
     },
     {
       username: "tusta",
-      nip: "tusta",
+      nip: "",
       nama: "Putu Tusta Ari Chandana",
       role: "admin",
       roleLabel: "Humas & Informasi (Super Admin)",
@@ -248,7 +248,9 @@ const AuthService = (() => {
         // Upgrade langsung ke Super Admin resmi dengan nama lengkap asli
         session.user.nama = matchedHumas.nama;
         session.user.username = matchedHumas.username;
-        session.user.nip = matchedHumas.username;
+        if (!session.user.nip || session.user.nip.toLowerCase() === matchedHumas.username.toLowerCase()) {
+          session.user.nip = "";
+        }
         session.user.role = "admin";
         session.user.roleLabel = matchedHumas.roleLabel || "Super Admin (Humas)";
         session.user.satker = matchedHumas.satker;
