@@ -329,23 +329,25 @@ function initialSetup() {
   // Skema Tabel & Header
   const TABLE_SCHEMAS = {
     "Data_Umat": {
-      headers: ["ID", "Timestamp", "Nama", "NIP", "Satker", "Jabatan", "WhatsApp", "Alamat", "Status"],
+      headers: ["ID", "Timestamp", "Nama", "NIP / Username", "Satker", "Jabatan", "WhatsApp", "Alamat", "Status"],
       seed: [
-        ["U-001", new Date().toISOString(), "I Ketut Sudirga, S.E.", "198501012010121001", "Kanwil DJPb", "Pembina Tk I", "081234567890", "Denpasar", "Aktif"],
-        ["U-002", new Date().toISOString(), "Ni Putu Saraswati, S.Kom.", "199203152015021002", "DJP", "Penata Madya", "081987654321", "Denpasar Timur", "Aktif"],
-        ["U-003", new Date().toISOString(), "I Wayan Arnawa, S.E., M.Si.", "199008202014032003", "DJBC", "Bendahara", "081333444555", "Badung", "Aktif"],
-        ["U-004", new Date().toISOString(), "I Made Wira Dananjaya", "199507112019011004", "DJKN", "Pelaksana", "085777888999", "Gianyar", "Aktif"],
-        ["U-005", new Date().toISOString(), "Ni Luh Putu Ayu Wardani", "199804102021022001", "BDK", "Pranata Komputer", "081234999000", "Renon", "Aktif"]
+        ["cunda", new Date().toISOString(), "Cunda Yokosantha", "cunda", "Kanwil DJPb", "Koordinator Humas & Informasi", "081234567890", "Denpasar", "Aktif"],
+        ["hendra", new Date().toISOString(), "Putu Agus Hendra Harjaya", "hendra", "DJKN", "Anggota Humas & Informasi", "081987654321", "Denpasar", "Aktif"],
+        ["ekasuardana", new Date().toISOString(), "I Putu Eka Suardana", "ekasuardana", "Setjen", "Anggota Humas & Informasi", "081333444555", "Denpasar", "Aktif"],
+        ["arini", new Date().toISOString(), "Ni Luh Nyoman Arini Asri Wijayanti", "arini", "DJKN", "Anggota Humas & Informasi", "085777888999", "Denpasar", "Aktif"],
+        ["prawirawijaya", new Date().toISOString(), "I Made Rai Prawirawijaya", "prawirawijaya", "Setjen", "Anggota Humas & Informasi", "081234999000", "Denpasar", "Aktif"],
+        ["tusta", new Date().toISOString(), "Putu Tusta Ari Chandana", "tusta", "DJKN", "Anggota Humas & Informasi", "081234567111", "Denpasar", "Aktif"]
       ]
     },
     "Users": {
-      headers: ["NIP", "Nama", "Role", "Satker", "Password", "Status"],
+      headers: ["Username", "Nama", "Role", "Satker", "Password", "Status"],
       seed: [
-        ["198501012010121001", "I Ketut Sudirga, S.E.", "admin", "Kanwil DJPb Bali", "198501012010121001", "Aktif"],
-        ["199203152015021002", "Ni Putu Saraswati, S.Kom.", "secretary", "KPP Pratama Denpasar Timur", "199203152015021002", "Aktif"],
-        ["199008202014032003", "I Wayan Arnawa, S.E., M.Si.", "finance", "KPPBC Denpasar", "199008202014032003", "Aktif"],
-        ["199804102021022001", "Ni Luh Putu Ayu Wardani", "humas", "Balai Diklat Keuangan Denpasar", "199804102021022001", "Aktif"],
-        ["199507112019011004", "I Made Wira Dananjaya", "member", "KPKNL Denpasar", "199507112019011004", "Aktif"]
+        ["cunda", "Cunda Yokosantha", "admin", "Kanwil DJPB Provinsi Bali", "cunda", "Aktif"],
+        ["hendra", "Putu Agus Hendra Harjaya", "admin", "KPKNL Denpasar", "hendra", "Aktif"],
+        ["ekasuardana", "I Putu Eka Suardana", "admin", "KPTIK BMN Denpasar", "ekasuardana", "Aktif"],
+        ["arini", "Ni Luh Nyoman Arini Asri Wijayanti", "admin", "KPKNL Denpasar", "arini", "Aktif"],
+        ["prawirawijaya", "I Made Rai Prawirawijaya", "admin", "KPTIK BMN Denpasar", "prawirawijaya", "Aktif"],
+        ["tusta", "Putu Tusta Ari Chandana", "admin", "KPKNL Denpasar", "tusta", "Aktif"]
       ]
     },
     "Artikel": {

@@ -5,88 +5,113 @@
  */
 
 const AuthService = (() => {
-  // Akun Demo Bawaan Pengurus & Anggota
+  // Akun Resmi Pengurus Bidang Humas & Informasi (Super Admin - Versi Username)
   const PRESET_USERS = [
     {
-      nip: "198501012010121001",
-      nama: "I Ketut Sudirga, S.E.",
-      role: "admin", // Super Admin Pengurus
-      roleLabel: "Ketua Pengurus / Super Admin",
-      satker: "Kanwil DJPb Bali",
-      jabatan: "Pembina Tingkat I"
+      username: "cunda",
+      nip: "cunda",
+      nama: "Cunda Yokosantha",
+      role: "admin",
+      roleLabel: "Koordinator Humas & Informasi (Super Admin)",
+      satker: "Kanwil DJPB Provinsi Bali",
+      jabatan: "Koordinator Bidang Humas dan Informasi"
     },
     {
-      nip: "199203152015021002",
-      nama: "Ni Putu Saraswati, S.Kom.",
-      role: "secretary", // Sekretaris Pengurus (Broadcast & Kesekretariatan)
-      roleLabel: "Pengurus - Sekretaris",
-      satker: "KPP Pratama Denpasar Timur (DJP)",
-      jabatan: "Penata Madya"
+      username: "hendra",
+      nip: "hendra",
+      nama: "Putu Agus Hendra Harjaya",
+      role: "admin",
+      roleLabel: "Humas & Informasi (Super Admin)",
+      satker: "KPKNL Denpasar",
+      jabatan: "Anggota Bidang Humas dan Informasi"
     },
     {
-      nip: "199008202014032003",
-      nama: "I Wayan Arnawa, S.E., M.Si.",
-      role: "finance", // Bendahara Kas Punia
-      roleLabel: "Pengurus - Bendahara Kas Punia",
-      satker: "KPPBC Denpasar (DJBC)",
-      jabatan: "Bendahara Pengeluaran"
+      username: "ekasuardana",
+      nip: "ekasuardana",
+      nama: "I Putu Eka Suardana",
+      role: "admin",
+      roleLabel: "Humas & Informasi (Super Admin)",
+      satker: "KPTIK BMN Denpasar",
+      jabatan: "Anggota Bidang Humas dan Informasi"
     },
     {
-      nip: "199804102021022001",
-      nama: "Ni Luh Putu Ayu Wardani",
-      role: "humas", // Humas & Publikasi (CMS Warta & Galeri)
-      roleLabel: "Pengurus - Humas & Publikasi",
-      satker: "Balai Diklat Keuangan (BDK) Denpasar",
-      jabatan: "Pranata Komputer / Humas"
+      username: "arini",
+      nip: "arini",
+      nama: "Ni Luh Nyoman Arini Asri Wijayanti",
+      role: "admin",
+      roleLabel: "Humas & Informasi (Super Admin)",
+      satker: "KPKNL Denpasar",
+      jabatan: "Anggota Bidang Humas dan Informasi"
     },
     {
-      nip: "199507112019011004",
-      nama: "I Made Wira Dananjaya",
-      role: "member", // Anggota Umat Biasa
-      roleLabel: "Anggota Umat GKN I Denpasar",
-      satker: "KPKNL Denpasar (DJKN)",
-      jabatan: "Pelaksana"
+      username: "prawirawijaya",
+      nip: "prawirawijaya",
+      nama: "I Made Rai Prawirawijaya",
+      role: "admin",
+      roleLabel: "Humas & Informasi (Super Admin)",
+      satker: "KPTIK BMN Denpasar",
+      jabatan: "Anggota Bidang Humas dan Informasi"
+    },
+    {
+      username: "tusta",
+      nip: "tusta",
+      nama: "Putu Tusta Ari Chandana",
+      role: "admin",
+      roleLabel: "Humas & Informasi (Super Admin)",
+      satker: "KPKNL Denpasar",
+      jabatan: "Anggota Bidang Humas dan Informasi"
     }
   ];
 
   /**
-   * Login dengan NIP dan Password (NIP & NIP)
+   * Login dengan Username dan Password (password default = username atau 'admin')
    */
-  function login(nip, password) {
+  function login(usernameInput, password) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const cleanNip = nip.trim();
-        const cleanPassword = password.trim();
+        const cleanInput = (usernameInput || "").trim().toLowerCase();
+        const cleanPassword = (password || "").trim();
 
-        if (!cleanNip || !cleanPassword) {
-          return reject(new Error("NIP dan Kata Sandi wajib diisi."));
+        if (!cleanInput || !cleanPassword) {
+          return reject(new Error("Username dan Kata Sandi wajib diisi."));
         }
 
-        // Validasi: default password adalah NIP
-        if (cleanNip !== cleanPassword) {
-          return reject(new Error("Kombinasi NIP dan Kata Sandi tidak sesuai. (Gunakan NIP sebagai kata sandi awal)."));
-        }
+        // Cari di daftar pengurus resmi
+        let user = PRESET_USERS.find(
+          u => u.username.toLowerCase() === cleanInput || (u.nip && u.nip.toLowerCase() === cleanInput)
+        );
 
-        // Cek apakah NIP terdaftar di database CRM DATA_UMAT_LOCAL
+        // Cek juga di database CRM lokal jika ada
         const crmList = JSON.parse(localStorage.getItem("DATA_UMAT_LOCAL") || "[]");
-        const foundCrm = crmList.find(u => u.nip === cleanNip);
+        const foundCrm = crmList.find(u => (u.nip && u.nip.toLowerCase() === cleanInput) || (u.username && u.username.toLowerCase() === cleanInput));
 
-        // Cek apakah NIP terdaftar di preset pengurus
-        let user = PRESET_USERS.find(u => u.nip === cleanNip);
-
-        if (foundCrm) {
+        if (user) {
+          // Password valid jika sama dengan username atau "admin"
+          if (cleanPassword.toLowerCase() !== user.username.toLowerCase() && cleanPassword !== "admin") {
+            return reject(new Error(`Kata sandi salah. Gunakan username '${user.username}' atau 'admin' sebagai kata sandi.`));
+          }
+        } else if (foundCrm) {
           user = {
-            nip: foundCrm.nip,
+            username: foundCrm.username || foundCrm.nip,
+            nip: foundCrm.nip || foundCrm.username,
             nama: foundCrm.nama,
-            role: foundCrm.role || (user ? user.role : "member"),
-            roleLabel: foundCrm.roleLabel || (user ? user.roleLabel : "Anggota Umat GKN I Denpasar"),
-            satker: foundCrm.satker || (user ? user.satker : "GKN I Denpasar"),
-            jabatan: foundCrm.jabatan || (user ? user.jabatan : "Pegawai")
+            role: foundCrm.role || "member",
+            roleLabel: foundCrm.roleLabel || "Anggota Umat GKN I Denpasar",
+            satker: foundCrm.satker || "GKN I Denpasar",
+            jabatan: foundCrm.jabatan || "Pegawai"
           };
-        } else if (!user) {
+          if (cleanPassword.toLowerCase() !== (user.username || "").toLowerCase() && cleanPassword !== user.nip && cleanPassword !== "admin") {
+            return reject(new Error("Kata sandi salah."));
+          }
+        } else {
+          // Member / Umat Baru fleksibel
+          if (cleanInput !== cleanPassword.toLowerCase() && cleanPassword !== "admin") {
+            return reject(new Error("Kombinasi Username dan Kata Sandi tidak sesuai."));
+          }
           user = {
-            nip: cleanNip,
-            nama: `Pegawai Umat GKN (${cleanNip.substring(cleanNip.length - 4)})`,
+            username: cleanInput,
+            nip: cleanInput,
+            nama: `Umat GKN (${cleanInput})`,
             role: "member",
             roleLabel: "Anggota Umat GKN I Denpasar",
             satker: "Gedung Keuangan Negara I Denpasar",

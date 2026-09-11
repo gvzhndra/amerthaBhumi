@@ -162,6 +162,12 @@ function initRegistrationModal() {
     if (e.target === modal) modal.classList.remove("show");
   });
 
+  // Buka otomatis jika datang dari link 'Daftar' di halaman login (?register=true atau #daftar)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("register") === "true" || window.location.hash === "#daftar") {
+    modal.classList.add("show");
+  }
+
   if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();

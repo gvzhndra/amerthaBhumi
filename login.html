@@ -157,49 +157,54 @@
 
       <form id="formLogin">
         <div class="form-group">
-          <label for="loginNip">NIP (Nomor Induk Pegawai)</label>
-          <input type="text" id="loginNip" name="nip" class="form-control" placeholder="Masukkan 18 digit NIP" required autofocus>
+          <label for="loginNip">Username / Nama Pengguna</label>
+          <input type="text" id="loginNip" name="nip" class="form-control" placeholder="Masukkan username (contoh: hendra, cunda...)" required autofocus>
         </div>
 
         <div class="form-group">
           <label for="loginPassword">Kata Sandi</label>
-          <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Kata sandi default adalah NIP Anda" required>
-          <span style="font-size: 0.75rem; color: var(--primary); margin-top: 0.35rem; display: block; font-weight: 500;">
-            Info: Kata sandi awal sama dengan NIP Anda.
-          </span>
+          <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Masukkan kata sandi" required>
         </div>
 
         <button type="submit" class="btn btn-primary" id="btnSubmitLogin" style="width: 100%; margin-top: 0.75rem;">
           Masuk ke Dashboard
         </button>
+
+        <div style="text-align: center; margin-top: 1.15rem; font-size: 0.85rem; color: var(--text-muted);">
+          Belum punya akun? <a href="index.html?register=true" style="color: var(--primary); font-weight: 600; text-decoration: none;">Daftar</a>
+        </div>
       </form>
 
       <!-- Akun Uji Coba Cepat (Khusus Mode Development / Demo) -->
       <div class="demo-accounts" id="demoAccountsSection">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;">
-          <div class="demo-title" style="margin-bottom: 0;">PILIH CEPAT UNTUK DEMO PERAN (ROLE)</div>
-          <span style="font-size: 0.68rem; color: #B45309; background: rgba(217, 119, 6, 0.12); border: 1px solid rgba(217, 119, 6, 0.25); border-radius: 4px; padding: 0.1rem 0.45rem; font-weight: 600;">Dev Mode</span>
+          <div class="demo-title" style="margin-bottom: 0;">PILIH CEPAT LOGIN PENGURUS (SUPER ADMIN)</div>
+          <span style="font-size: 0.68rem; color: #B45309; background: rgba(217, 119, 6, 0.12); border: 1px solid rgba(217, 119, 6, 0.25); border-radius: 4px; padding: 0.1rem 0.45rem; font-weight: 600;">Super Admin</span>
         </div>
         <div class="demo-chips">
-          <div class="demo-chip" data-nip="198501012010121001">
-            <span><b>I Ketut Sudirga</b> (NIP: ...1001)</span>
-            <span class="role-tag">Super Admin</span>
+          <div class="demo-chip" data-nip="cunda">
+            <span><b>@cunda</b> (Cunda Yokosantha)</span>
+            <span class="role-tag" style="color: #D97706; font-weight: 700;">Koordinator Humas</span>
           </div>
-          <div class="demo-chip" data-nip="199203152015021002">
-            <span><b>Ni Putu Saraswati</b> (NIP: ...1002)</span>
-            <span class="role-tag">Sekretaris</span>
+          <div class="demo-chip" data-nip="hendra">
+            <span><b>@hendra</b> (Putu Agus Hendra)</span>
+            <span class="role-tag" style="color: #D97706; font-weight: 700;">Humas / Admin</span>
           </div>
-          <div class="demo-chip" data-nip="199008202014032003">
-            <span><b>I Wayan Arnawa</b> (NIP: ...1003)</span>
-            <span class="role-tag">Bendahara</span>
+          <div class="demo-chip" data-nip="ekasuardana">
+            <span><b>@ekasuardana</b> (I Putu Eka Suardana)</span>
+            <span class="role-tag" style="color: #D97706; font-weight: 700;">Humas / Admin</span>
           </div>
-          <div class="demo-chip" data-nip="199804102021022001">
-            <span><b>Ni Luh Putu Ayu</b> (NIP: ...2001)</span>
-            <span class="role-tag">Humas</span>
+          <div class="demo-chip" data-nip="arini">
+            <span><b>@arini</b> (Ni Luh Nyoman Arini)</span>
+            <span class="role-tag" style="color: #D97706; font-weight: 700;">Humas / Admin</span>
           </div>
-          <div class="demo-chip" data-nip="199507112019011004">
-            <span><b>I Made Wira</b> (NIP: ...1004)</span>
-            <span class="role-tag">Anggota Umat</span>
+          <div class="demo-chip" data-nip="prawirawijaya">
+            <span><b>@prawirawijaya</b> (I Made Rai Prawirawijaya)</span>
+            <span class="role-tag" style="color: #D97706; font-weight: 700;">Humas / Admin</span>
+          </div>
+          <div class="demo-chip" data-nip="tusta">
+            <span><b>@tusta</b> (Putu Tusta Ari Chandana)</span>
+            <span class="role-tag" style="color: #D97706; font-weight: 700;">Humas / Admin</span>
           </div>
         </div>
         <div style="text-align: right; margin-top: 0.5rem;">

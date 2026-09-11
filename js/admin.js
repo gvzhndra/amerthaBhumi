@@ -4,12 +4,12 @@ const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbxvqiwnvJthhvcbRV9
    INITIAL REPOSITORY DATASETS (DECLARED FIRST TO AVOID TDZ ERRORS)
    ========================================================================== */
 const INITIAL_UMAT = [
-  { id: "U-001", nama: "I Ketut Sudirga, S.E.", nip: "198501012010121001", satker: "Kanwil DJPb", jabatan: "Pembina Tk I", whatsapp: "081234567890", status: "Aktif", role: "admin", roleLabel: "Super Admin" },
-  { id: "U-002", nama: "Ni Putu Saraswati, S.Kom.", nip: "199203152015021002", satker: "DJP", jabatan: "Penata Madya", whatsapp: "081987654321", status: "Aktif", role: "secretary", roleLabel: "Sekretaris" },
-  { id: "U-003", nama: "I Wayan Arnawa, S.E., M.Si.", nip: "199008202014032003", satker: "DJBC", jabatan: "Bendahara", whatsapp: "081333444555", status: "Aktif", role: "finance", roleLabel: "Bendahara" },
-  { id: "U-004", nama: "I Made Wira Dananjaya", nip: "199507112019011004", satker: "DJKN", jabatan: "Pelaksana", whatsapp: "085777888999", status: "Aktif", role: "member", roleLabel: "Anggota" },
-  { id: "U-005", nama: "Ni Luh Putu Ayu Wardani", nip: "199804102021022001", satker: "BDK", jabatan: "Pranata Komputer", whatsapp: "081234999000", status: "Aktif", role: "humas", roleLabel: "Humas" },
-  { id: "U-006", nama: "Drs. I Gusti Ngurah Oka", nip: "196405121989031001", satker: "DJP", jabatan: "Pensiunan Pegawai", whatsapp: "081234567111", status: "Nonaktif", role: "member", roleLabel: "Anggota" }
+  { id: "cunda", nama: "Cunda Yokosantha", nip: "cunda", satker: "Kanwil DJPb", jabatan: "Koordinator Humas & Informasi", whatsapp: "081234567890", status: "Aktif", role: "admin", roleLabel: "Super Admin (Humas)" },
+  { id: "hendra", nama: "Putu Agus Hendra Harjaya", nip: "hendra", satker: "DJKN", jabatan: "Anggota Humas & Informasi", whatsapp: "081987654321", status: "Aktif", role: "admin", roleLabel: "Super Admin (Humas)" },
+  { id: "ekasuardana", nama: "I Putu Eka Suardana", nip: "ekasuardana", satker: "Setjen", jabatan: "Anggota Humas & Informasi", whatsapp: "081333444555", status: "Aktif", role: "admin", roleLabel: "Super Admin (Humas)" },
+  { id: "arini", nama: "Ni Luh Nyoman Arini Asri Wijayanti", nip: "arini", satker: "DJKN", jabatan: "Anggota Humas & Informasi", whatsapp: "085777888999", status: "Aktif", role: "admin", roleLabel: "Super Admin (Humas)" },
+  { id: "prawirawijaya", nama: "I Made Rai Prawirawijaya", nip: "prawirawijaya", satker: "Setjen", jabatan: "Anggota Humas & Informasi", whatsapp: "081234999000", status: "Aktif", role: "admin", roleLabel: "Super Admin (Humas)" },
+  { id: "tusta", nama: "Putu Tusta Ari Chandana", nip: "tusta", satker: "DJKN", jabatan: "Anggota Humas & Informasi", whatsapp: "081234567111", status: "Aktif", role: "admin", roleLabel: "Super Admin (Humas)" }
 ];
 
 const INITIAL_AGENDA = [
