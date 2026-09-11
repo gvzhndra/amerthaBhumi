@@ -129,9 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
   try { initKasPuniaModule(); } catch (e) { console.error("initKasPuniaModule error:", e); }
   try { initAuditKasModule(currentUser); } catch (e) { console.error("initAuditKasModule error:", e); }
   try { initAgendaModule(currentUser); } catch (e) { console.error("initAgendaModule error:", e); }
-  try { initPengumumanModule(currentUser); } catch (e) { console.error("initPengumumanModule error:", e); }
   try { initProfileModule(currentUser); } catch (e) { console.error("initProfileModule error:", e); }
   try { updateOverviewKpi(); } catch (e) { console.error("updateOverviewKpi error:", e); }
+
+  // Watchdog sesi: otomatis logout jika melewati batas waktu 6 jam saat dashboard sedang dibuka
+  setInterval(() => {
+    if (typeof AuthService !== "undefined") {
+      const activeUser = AuthService.getCurrentUser();
+      if (!activeUser) {
+        AuthService.logout("timeout");
+      }
+    }
+  }, 15000);
 });
 
 /* ==========================================================================
@@ -2499,7 +2508,11 @@ function initProfileModule(user) {
         try {
           const session = JSON.parse(rawSession);
           session.user.photoUrl = dataUrl;
-          localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+          if (typeof AuthService !== "undefined" && AuthService.saveSession) {
+            AuthService.saveSession(session);
+          } else {
+            localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+          }
         } catch (e) {}
       }
       const umatList = JSON.parse(localStorage.getItem("DATA_UMAT_LOCAL") || "[]");
@@ -2716,7 +2729,11 @@ function initProfileModule(user) {
           session.user.jabatan = updatedJabatan;
           session.user.whatsapp = updatedWa;
           session.user.alamat = updatedAlamat;
-          localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+          if (typeof AuthService !== "undefined" && AuthService.saveSession) {
+            AuthService.saveSession(session);
+          } else {
+            localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+          }
 
           // Update topbar display
           const topName = document.getElementById("topbarUserName");
@@ -2819,6 +2836,27 @@ function initProfileModule(user) {
       showToast("Kata sandi Anda berhasil diperbarui dan tersimpan permanen!", "success");
     });
   }
+
+  // Toggle Intip Password pada form keamanan akun
+  document.querySelectorAll(".btn-toggle-pw").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const targetId = btn.getAttribute("data-target");
+      const input = document.getElementById(targetId);
+      const icon = btn.querySelector("svg");
+      if (!input) return;
+      const isPw = input.type === "password";
+      input.type = isPw ? "text" : "password";
+      if (icon) {
+        if (isPw) {
+          icon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+          btn.style.color = "var(--primary)";
+        } else {
+          icon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+          btn.style.color = "var(--text-muted)";
+        }
+      }
+    });
+  });
 }
 
 /* ==========================================================================

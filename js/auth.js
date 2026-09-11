@@ -63,6 +63,39 @@ const AuthService = (() => {
     }
   ];
 
+  const MAX_SESSION_DURATION_MS = 6 * 60 * 60 * 1000; // 6 Jam (21.600.000 ms)
+
+  function hasSessionCookie() {
+    try {
+      return document.cookie.split(";").some(item => item.trim().startsWith("AMERTHA_BHUMI_BROWSER_SESSION="));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function setSessionCookie() {
+    try {
+      // Session cookie tanpa Max-Age / Expires: otomatis dihapus oleh OS/Browser saat jendela browser ditutup!
+      document.cookie = "AMERTHA_BHUMI_BROWSER_SESSION=active; path=/; SameSite=Lax";
+    } catch (e) {}
+  }
+
+  function clearSessionCookie() {
+    try {
+      document.cookie = "AMERTHA_BHUMI_BROWSER_SESSION=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+    } catch (e) {}
+  }
+
+  function saveSession(session) {
+    if (!session) return;
+    try {
+      const str = JSON.stringify(session);
+      sessionStorage.setItem("AMERTHA_BHUMI_SESSION", str);
+      localStorage.setItem("AMERTHA_BHUMI_SESSION", str);
+      setSessionCookie();
+    } catch (e) {}
+  }
+
   /**
    * Login dengan Username dan Password (password default = username atau 'admin')
    */
@@ -97,7 +130,7 @@ const AuthService = (() => {
           } else {
             // Password default jika belum diubah
             if (cleanPassword.toLowerCase() !== user.username.toLowerCase() && cleanPassword !== "admin") {
-              return reject(new Error(`Kata sandi salah. Gunakan username '${user.username}' atau 'admin' sebagai kata sandi.`));
+              return reject(new Error("Kata sandi yang Anda masukkan salah. Silakan periksa kembali."));
             }
           }
         } else if (foundCrm) {
@@ -141,28 +174,61 @@ const AuthService = (() => {
           };
         }
 
-        // Buat Session Token
+        // Buat Session Token dengan batas waktu 6 jam
+        const now = Date.now();
         const session = {
-          token: "TOKEN_AMERTHABHUMI_" + Math.random().toString(36).substring(2) + Date.now(),
+          token: "TOKEN_AMERTHABHUMI_" + Math.random().toString(36).substring(2) + now,
           user: user,
-          loginTime: new Date().toISOString()
+          loginTime: now,
+          expiresAt: now + MAX_SESSION_DURATION_MS
         };
 
-        localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+        saveSession(session);
         resolve(session);
       }, 500);
     });
   }
 
   /**
-   * Mengambil sesi pengguna yang sedang aktif
+   * Mengambil sesi pengguna yang sedang aktif (Validasi 6 Jam & Penutupan Browser)
    */
   function getCurrentUser() {
-    const raw = localStorage.getItem("AMERTHA_BHUMI_SESSION");
+    // 1. Validasi penutupan browser:
+    // Jika sessionStorage kosong dan session cookie tidak ada, berarti browser pernah ditutup total!
+    const inSessionStorage = sessionStorage.getItem("AMERTHA_BHUMI_SESSION");
+    const cookieActive = hasSessionCookie();
+
+    if (!inSessionStorage && !cookieActive) {
+      // Browser telah ditutup sebelumnya: bersihkan sisa sesi
+      localStorage.removeItem("AMERTHA_BHUMI_SESSION");
+      clearSessionCookie();
+      return null;
+    }
+
+    const raw = inSessionStorage || localStorage.getItem("AMERTHA_BHUMI_SESSION");
     if (!raw) return null;
+
     try {
       const session = JSON.parse(raw);
       if (!session || !session.user) return null;
+
+      // 2. Validasi Batas Waktu 6 Jam (Timeout)
+      const now = Date.now();
+      const loginTs = typeof session.loginTime === "number" 
+        ? session.loginTime 
+        : (session.loginTime ? new Date(session.loginTime).getTime() : 0);
+      const expiresAt = session.expiresAt || (loginTs ? loginTs + MAX_SESSION_DURATION_MS : 0);
+
+      if (!loginTs || (expiresAt && now > expiresAt) || (now - loginTs > MAX_SESSION_DURATION_MS)) {
+        logout("timeout");
+        return null;
+      }
+
+      // Pastikan session cookie dan sessionStorage tetap aktif & tersinkron
+      setSessionCookie();
+      if (!inSessionStorage) {
+        sessionStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+      }
 
       const rawId = (session.user.username || session.user.nip || "").toLowerCase();
       const rawName = (session.user.nama || "").toLowerCase();
@@ -187,12 +253,12 @@ const AuthService = (() => {
         session.user.roleLabel = matchedHumas.roleLabel || "Super Admin (Humas)";
         session.user.satker = matchedHumas.satker;
         session.user.jabatan = matchedHumas.jabatan;
-        localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+        saveSession(session);
       } else {
         // Hilangkan kata 'Pegawai Umat GKN (...)' jika masih tersisa
         if (session.user.nama && session.user.nama.startsWith("Pegawai Umat GKN")) {
           session.user.nama = session.user.nama.replace(/Pegawai Umat GKN\s*\((.*?)\)/i, "$1").trim() || session.user.username || "Umat GKN";
-          localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+          saveSession(session);
         }
 
         // Sinkronkan peran terbaru dari DATA_UMAT_LOCAL jika ada
@@ -201,7 +267,7 @@ const AuthService = (() => {
         if (foundCrm && foundCrm.role && foundCrm.role !== session.user.role) {
           session.user.role = foundCrm.role;
           session.user.roleLabel = foundCrm.roleLabel || session.user.roleLabel;
-          localStorage.setItem("AMERTHA_BHUMI_SESSION", JSON.stringify(session));
+          saveSession(session);
         }
       }
 
@@ -217,7 +283,9 @@ const AuthService = (() => {
   function requireAuth(allowedRoles = []) {
     const user = getCurrentUser();
     if (!user) {
-      window.location.href = "login.html";
+      if (!window.location.pathname.endsWith("login.html")) {
+        window.location.href = "login.html";
+      }
       return null;
     }
 
@@ -233,9 +301,16 @@ const AuthService = (() => {
   /**
    * Keluar dari sesi
    */
-  function logout() {
+  function logout(reason = "") {
+    sessionStorage.removeItem("AMERTHA_BHUMI_SESSION");
     localStorage.removeItem("AMERTHA_BHUMI_SESSION");
-    window.location.href = "login.html";
+    clearSessionCookie();
+
+    let targetUrl = "login.html";
+    if (reason) {
+      targetUrl += "?reason=" + encodeURIComponent(reason);
+    }
+    window.location.href = targetUrl;
   }
 
   return {
@@ -243,6 +318,7 @@ const AuthService = (() => {
     getCurrentUser,
     requireAuth,
     logout,
+    saveSession,
     PRESET_USERS
   };
 })();

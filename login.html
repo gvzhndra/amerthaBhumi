@@ -163,7 +163,15 @@
 
         <div class="form-group">
           <label for="loginPassword">Kata Sandi</label>
-          <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Masukkan kata sandi" required>
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="loginPassword" name="password" class="form-control" placeholder="Masukkan kata sandi" style="padding-right: 2.75rem;" required>
+            <button type="button" id="btnTogglePassword" style="position: absolute; right: 0.65rem; background: none; border: none; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; padding: 0.35rem; border-radius: 4px; transition: color 0.15s ease;" title="Tampilkan / Sembunyikan Kata Sandi" aria-label="Lihat kata sandi">
+              <svg id="eyeIcon" viewBox="0 0 24 24" style="width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <button type="submit" class="btn btn-primary" id="btnSubmitLogin" style="width: 100%; margin-top: 0.75rem;">
@@ -243,7 +251,26 @@
         }
       }
 
-      if (typeof AuthService !== "undefined") {
+      const form = document.getElementById("formLogin");
+      const alertBox = document.getElementById("loginAlert");
+      const submitBtn = document.getElementById("btnSubmitLogin");
+
+      const reason = urlParams.get("reason");
+      if (reason === "timeout" && alertBox) {
+        alertBox.style.display = "block";
+        alertBox.style.background = "#FEF3C7";
+        alertBox.style.borderColor = "#F59E0B";
+        alertBox.style.color = "#92400E";
+        alertBox.innerHTML = `<strong>Sesi Berakhir:</strong> Batas waktu sesi (6 jam) telah tercapai demi keamanan. Silakan login kembali.`;
+      } else if (reason === "browser_closed" && alertBox) {
+        alertBox.style.display = "block";
+        alertBox.style.background = "#F1F5F9";
+        alertBox.style.borderColor = "#CBD5E1";
+        alertBox.style.color = "#334155";
+        alertBox.innerHTML = `<strong>Sesi Diakhiri:</strong> Anda telah keluar otomatis karena peramban telah ditutup sebelumnya.`;
+      }
+
+      if (typeof AuthService !== "undefined" && !reason) {
         const current = AuthService.getCurrentUser();
         if (current) {
           window.location.href = "admin.html";
@@ -259,9 +286,31 @@
         });
       }
 
-      const form = document.getElementById("formLogin");
-      const alertBox = document.getElementById("loginAlert");
-      const submitBtn = document.getElementById("btnSubmitLogin");
+      // Toggle Intip Password (Lihat / Sembunyikan Kata Sandi)
+      const btnToggle = document.getElementById("btnTogglePassword");
+      const passInput = document.getElementById("loginPassword");
+      const eyeIcon = document.getElementById("eyeIcon");
+
+      if (btnToggle && passInput && eyeIcon) {
+        btnToggle.addEventListener("click", () => {
+          const isPassword = passInput.getAttribute("type") === "password";
+          if (isPassword) {
+            passInput.setAttribute("type", "text");
+            eyeIcon.innerHTML = `
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            `;
+            btnToggle.style.color = "var(--primary)";
+          } else {
+            passInput.setAttribute("type", "password");
+            eyeIcon.innerHTML = `
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            `;
+            btnToggle.style.color = "var(--text-muted)";
+          }
+        });
+      }
 
       document.querySelectorAll(".demo-chip").forEach(chip => {
         chip.addEventListener("click", () => {
